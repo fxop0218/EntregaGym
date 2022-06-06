@@ -19,22 +19,12 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="713dp">
+                android:layout_height="474dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/ivAzul"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginTop="50dp"
-                        android:layout_marginRight="30dp"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@color/azul_logo" />
 
                     <TextView
                         android:id="@+id/tvRutines"
@@ -44,6 +34,7 @@
                         android:layout_marginTop="20dp"
                         android:layout_marginRight="30dp"
                         android:gravity="center"
+                        android:textColor="@color/blanco"
                         android:text="@string/rutinas"
                         android:textSize="19sp"
                         android:textStyle="bold" />
@@ -99,6 +90,7 @@
                         android:layout_marginTop="20dp"
                         android:layout_marginRight="30dp"
                         android:gravity="center"
+                        android:textColor="@color/blanco"
                         android:text="@string/dietas"
                         android:textSize="19sp"
                         android:textStyle="bold" />
@@ -122,7 +114,6 @@
                         android:layout_marginRight="30dp"
                         android:background="@drawable/boton2"
                         android:drawableLeft="@drawable/ic_hipocalorica"
-                        android:onClick="onButtonShowPopupWindowClick"
                         android:text="@string/Dieta_hipocalórica" />
 
                     <Button
@@ -157,6 +148,7 @@
                         android:gravity="center"
                         android:text="@string/maquinas"
                         android:textSize="19sp"
+                        android:textColor="@color/blanco"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -190,6 +182,7 @@
                         android:background="@drawable/boton2"
                         android:drawableLeft="@drawable/ic_poleas"
                         android:text="@string/Con_poleas" />
+
 
                     <Button
                         android:id="@+id/bt_pesas"

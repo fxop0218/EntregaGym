@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/nuevo_logo"
+        android:scaleType="center"
+        />
+    <TextView
+        android:id="@+id/rv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="20dp"
+        android:layout_margin = "20dp"
+        android:layout_marginRight="20dp"
+        />
+
+    <TextView
+        android:id="@+id/rv_hora_ini"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        android:text="hora"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/rv_hora_fin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="100dp"
+        android:layout_marginBottom="20dp"
+
+        />
+
+</RelativeLayout>

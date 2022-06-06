@@ -1,10 +1,13 @@
 package com.example.gym.ui.login;
 
 import android.app.Activity;
+
+import com.example.gym.data.Encript;
+import com.example.gym.UserSession;
 import com.example.gym.pojos.PojosClass;
+import com.example.gym.databinding.ActivityLoginBinding;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -26,41 +29,23 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.gym.Clases.Actividad;
-import com.example.gym.Clases.Reserva;
 import com.example.gym.Clases.Usuario;
 import com.example.gym.data.RegisterActivity;
 import com.example.gym.MainActivity;
 import com.example.gym.R;
-import com.example.gym.SplashScreen;
-import com.example.gym.data.RegisterActivity;
-import com.example.gym.pojos.FireBaseConnection;
-import com.example.gym.pojos.UsersDAOImp;
-import com.example.gym.ui.login.LoginViewModel;
-import com.example.gym.ui.login.LoginViewModelFactory;
-import com.example.gym.databinding.ActivityLoginBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private ActivityLoginBinding binding;
-    private PojosClass pjClss = new PojosClass();
+    private boolean isOwner = false;
+    private Usuario usr;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -147,34 +132,78 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             String pwd = "";
             Usuario usr = null;
+            int idGym = 0;
+
+            String pwdEncripted;
+
             @Override
             public void onClick(View v) {
-                loginButton.setEnabled(false);
-                usr = pjClss.getUsuarioDAO().getUsuario(usernameEditText.getText().toString(), (usuario -> {
-                   pwd = usuario.getPassword();
-                    if (pwd.equals(passwordEditText.getText().toString())) {
-                        Toast.makeText(getApplicationContext(), "Bienvenido", Toast.LENGTH_SHORT).show();
-                        loadingProgressBar.setVisibility(View.VISIBLE);
-                        loginViewModel.login(usernameEditText.getText().toString(),
-                                passwordEditText.getText().toString());
-                    } else {
-                        Toast.makeText(getApplicationContext(), "La contraseña es incorrecta, intentalo de nuevo", Toast.LENGTH_SHORT).show();
 
-                    }
+                loginButton.setEnabled(false);
+
+                usr = PojosClass.getUsuarioDAO().getUsuario(usernameEditText.getText().toString(), (usuario -> {
+                    //This catch throws a NullPointerException when don't get a User
+                   try {
+                       String pwdEt = passwordEditText.getText().toString();
+                       pwdEncripted = Encript.encriptar(pwdEt);
+                       pwd = usuario.getPassword();
+                       if (pwd.equals(pwdEncripted) || emailVerificado()) {
+                           UserSession.setUsuario(usuario);
+                           isOwner = usuario.isGymOwner();
+                           loadingProgressBar.setVisibility(View.VISIBLE);
+                           loginViewModel.login(usernameEditText.getText().toString(),
+                                   passwordEditText.getText().toString());
+                       } else {
+                           Toast.makeText(getApplicationContext(), R.string.contraseña_incorrecta, Toast.LENGTH_SHORT).show();
+                       }
+                   } catch (NullPointerException e) {
+                       loginButton.setEnabled(true);
+                       Toast.makeText(getApplicationContext(), R.string.contraseña_usuario_incorrecto, Toast.LENGTH_SHORT).show();
+                   } catch (Exception e) {
+                       Toast.makeText(getApplicationContext(), R.string.contraseña_usuario_incorrecto, Toast.LENGTH_SHORT).show();
+                   }
                 }), (e -> {
-                    loginButton.setEnabled(true);
-                    Toast.makeText(getApplicationContext(), "Contraseña o usuario incorrecto", Toast.LENGTH_SHORT).show();
+                    try {
+                        loginButton.setEnabled(true);
+                        Toast.makeText(getApplicationContext(), R.string.contraseña_usuario_incorrecto, Toast.LENGTH_SHORT).show();
+                    } catch (Exception e1) {
+                        loginButton.setEnabled(true);
+                        Toast.makeText(getApplicationContext(), R.string.contraseña_usuario_incorrecto, Toast.LENGTH_SHORT).show();
+                    }
                 }));
             }
         });
     }
 
+    private boolean emailVerificado(){
+
+        final boolean[] emailverificado = {false};
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull @NotNull FirebaseAuth firebaseAuth) {
+
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                if (!user.isEmailVerified()){
+
+                    Toast.makeText(getApplicationContext(), getString(R.string.verificar_correo) + user.getEmail(), Toast.LENGTH_LONG).show();
+                }
+                if (user != null){
+
+                    emailverificado[0] = true;
+                }
+            }
+        };
+        return emailverificado[0];
+    }
+
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
+
+        String welcome = getString(R.string.welcome) + UserSession.getUsuario().getUser();
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("user", binding.username.getText().toString());
+        //intent.putExtra("usua", isOwner);
         startActivity(intent);
     }
 
@@ -187,4 +216,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent i = new Intent(this, RegisterActivity.class);
         startActivity(i);
     }
+
+
 }

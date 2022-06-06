@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,45 +8,91 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="481dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:height="50dp"
+                android:background="@drawable/botones_pers"
+                android:gravity="center"
+                android:text="@string/material_para_gym"
+                android:textColor="@color/blanco"
+                android:textStyle="bold"
+                android:paddingStart="10dp"
+                app:drawableLeftCompat="@drawable/ic_material" />
 
-                <com.google.android.material.tabs.TabItem
-                    android:icon="@drawable/ic_material"
-                    android:id="@+id/tab1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/material" />
+            <ImageButton
+                android:id="@+id/ibMaterial"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/material"
+                android:background="@drawable/custom_image"/>
 
-                <com.google.android.material.tabs.TabItem
-                    android:icon="@drawable/ic_suplementos"
-                    android:id="@+id/tab2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/suplementos" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:icon="@drawable/ic_vestuario"
-                    android:id="@+id/tab3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/vestuario" />
-
-            </com.google.android.material.tabs.TabLayout>
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewPager"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="632dp" />
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:height="50dp"
+                android:background="@drawable/botones_pers"
+                android:gravity="center"
+                android:text="@string/suplementos_para_gym"
+                android:textColor="@color/blanco"
+                android:textStyle="bold"
+                android:paddingStart="10dp"
+                app:drawableStartCompat="@drawable/ic_suplementos" />
+
+            <ImageButton
+                android:id="@+id/ibSuplementos"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/suplementos"
+                android:background="@drawable/custom_image"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:height="50dp"
+                android:background="@drawable/botones_pers"
+                android:gravity="center"
+                android:text="@string/vestuario_para_gym"
+                android:textColor="@color/blanco"
+                android:textStyle="bold"
+                android:paddingStart="10dp"
+                app:drawableStartCompat="@drawable/ic_vestuario" />
+
+            <ImageButton
+                android:id="@+id/ibVestuario"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/vestuario"
+                android:background="@drawable/custom_image"/>
+
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

@@ -1,30 +1,30 @@
 <resources>
-    <string name="app_name">gym</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="app_name" translatable="false">Gym</string>
+    <string name="title_activity_login" translatable="false">LoginActivity</string>
     <string name="prompt_email">Correo electronico</string>
     <string name="prompt_password">Contraseña</string>
-    <string name="action_sign_in">Sign in</string>
-    <string name="action_register">Register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Bienvenido !"</string>
+    <string name="action_sign_in" translatable="false">Sign in</string>
+    <string name="action_register" translatable="false">Register as GymUser</string>
+    <string name="action_sign_in_short" translatable="false">Sign in</string>
+    <string name="welcome">"Bienvenido "</string>
     <string name="invalid_username">No es un usuario valido</string>
     <string name="invalid_password">La contraseña tiene que tener mas de 5 caracteres</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="bottom_nav_home">Home</string>
-    <string name="bottom_nav_calendar">Calendari</string>
+    <string name="login_failed" translatable="false">"Login failed"</string>
+    <string name="bottom_nav_home" translatable="false">Home</string>
+    <string name="bottom_nav_calendar">Calendario</string>
     <string name="bottom_nav_tienda">Tienda</string>
     <string name="bottom_nav_user">Usuario</string>
-    <string name="title_activity_bottom_nav">MainActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_bottom_nav" translatable="false">MainActivity</string>
+    <string name="title_home" translatable="false">Home</string>
+    <string name="title_dashboard" translatable="false">Dashboard</string>
+    <string name="title_notifications" translatable="false">Notifications</string>
     <!--- String fragment Calendar -->
-    <string name="bViewActivities">View activities</string>
-    <string name="bViewUpcomingActivities">See upcoming activities</string>
+    <string name="bViewActivities" translatable="false">View activities</string>
+    <string name="bViewUpcomingActivities" translatable="false">See upcoming activities</string>
     <!--- String fragment Register -->
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="etDni">DNI</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="etDni" translatable="false">DNI</string>
     <string name="etNombre">Nombre</string>
     <string name="etApellidos">Apellidos</string>
     <string name="etFecha_de_nacimiento">Fecha de Nacimiento</string>
@@ -51,4 +51,73 @@
     <string name="material">Material</string>
     <string name="suplementos">Suplementos</string>
     <string name="vestuario">Vestuario</string>
+    <string name="onAcctionCreateGymAccount" translatable="false">Register as GymEditor</string>
+    <string name="idGym" translatable="false">Gym id</string>
+    <string name="ciudad">Ciudad</string>
+    <string name="codigoPostal">Codigo postal</string>
+    <string name="horaA">Hora apertura</string>
+    <string name="horaC">Hora cierre</string>
+    <string name="create_your_gym" translatable="false">Create your gym</string>
+    <string name="nextStep" translatable="false">Next step</string>
+    <string name="register" translatable="false">register</string>
+    <string name="new_activity" translatable="false">Create new Activity</string>
+    <string name="material_para_gym">MATERIAL PARA GYM</string>
+    <string name="suplementos_para_gym">SUPLEMENTOS PARA GYM</string>
+    <string name="vestuario_para_gym">VESTUARIO PARA GYM</string>
+    <string name="crear_actividad">Crear actividad</string>
+    <string name="id_actividad">Id actividad</string>
+    <string name="nombre">Nombre</string>
+    <string name="aforo_maximo">Aforo maximo</string>
+    <string name="aforo_actual">Aforo actual</string>
+    <string name="registrar_actividad">Registrar actividad</string>
+    <string name="hora_de_cierre">Hora de cierre</string>
+    <string name="hora_de_apertura">Hora de apertura</string>
+    <string name="mas_productos">MAS PRODUCTOS</string>
+    <string name="mas_suplementos">MAS SUPLEMENTOS</string>
+    <string name="ropa_mujer">ROPA MUJER</string>
+    <string name="ropa_hombre">ROPA HOMBRE</string>
+    <string name="cerrar">Cerrar</string>
+    <string name="actividades_proximas">Actividades proximas</string>
+    <string name= "actividades" translatable="false">Actividades</string>
+    <string name="atras">Atras</string>
+    <string name="el_ptica">ELIPTICA</string>
+    <string name="eliptica_exp">Perfecto para mejorar la coordinación y el sentido del equilibrio, es una de las máquinas más completas, ya que nos hace ejercitar el 80% de los músculos de nuestro cuerpo, y también muy intenso a nivel cardiovascular y respiratorio. En el tren superior se trabajan los pectorales y los hombros y en la parte baja los cuádriceps y nalgas. Y de manera secundaria la espalda, los brazos y los abdominales. Además, quema muchísimas calorías.</string>
+    <string name="stepper" translatable="false">STEPPER</string>
+    <string name="stepper_exp">El objetivo de este ejercicio es trabajar y tonificar los músculos de las piernas y de las nalgas. A mayor dificultad o nivel en la máquina, mayor es la velocidad que se requiere moviendo las piernas. En muy poco tiempo notarás una mejoría tanto en el tono como en el volumen de tus glúteos y piernas.</string>
+    <string name="bicicleta_estatica">BICICLETA ESTATICA</string>
+    <string name="bicicleta_est_exp">Es la más eficiente si queremos centrar nuestro objetivo en el tren inferior. Junto al trabajo cardiovascular y respiratorio estaremos realizando una alternancia de contracciones de los muslos que favorecen la circulación y el gasto energético. Es decir, quemamos más calorías. Si el objetivo es adelgazar, aumenta el tiempo de pedaleo por encima de los 30 minutos. También notarás una mejoría en la zona de los abdominales y los estabilizadores de la espalda.</string>
+    <string name="cinta_de_correr">CINTA DE CORRER</string>
+    <string name="cintadecorrer_expl">Con ella conseguiremos una quema de grasa gradual a través del ejercicio cardiovascular y muscular. Si corremos sobre ella, lograremos una mejor amortiguación la cinta pasa y no tenemos que empujar con el glúteo</string>
+    <string name="remo">REMO</string>
+    <string name="remo_exp">Trabajamos simultáneamente varios grupos musculares como los brazos, los glúteos o la espalda, y además a una intensidad considerable. De manera más concreta, los dorsales son los músculos que más fortaleceremos con el remo, dándole amplitud a nuestra espalda. También están implicados los pectorales, tríceps y los abdominales. No hace falta que la intensidad del ejercicio sea muy alta, ya que el corazón aumenta su frecuencia cardíaca con relativa facilidad.</string>
+    <string name="darte_de_alte_en_un_gimnasio">Darte de alte en un gimnasio</string>
+    <string name="correo">Correo Electronico</string>
+    <string name="crea_tu_gimnasio">Crea tu gimnasio</string>
+    <string name="perfil_de_user">PERFIL DE USER</string>
+    <string name="crear_usuario">Crear usuario</string>
+    <string name="contraseña_incorrecta">La contraseña es incorrecta, intentalo de nuevo</string>
+    <string name="contraseña_usuario_incorrecto">Contraseña o usuario incorrecto</string>
+    <string name="verificar_correo">Necesitas verificar el correo</string>
+    <string name="error_asignacion_actividad">Error al asignarte a la acividad</string>
+    <string name="ya_apuntado_actividad">Ya estas apuntado en esta actividad</string>
+    <string name="eliminar_reserva">Se ha eliminado la reserva con exito</string>
+    <string name="erro_eliminar_actividad">No se ha podido eliminar la actividad</string>
+    <string name="accion_cancelada">Acción cancelada con exito</string>
+    <string name="error_encontrar_actividad">No se ha encontrado ninguna actividad relacionada</string>
+    <string name="error_encontrar_actividad_proxima">No se ha encontrado ninguna actividad proxima</string>
+    <string name="no_proximas_actividades">No tienes proximas actividades</string>
+    <string name="eliminar_actividad">Eliminar actividad</string>
+    <string name="Actividades">Actividades</string>
+    <string name="error_seleccion_dia">Error al selecionar un dia</string>
+    <string name="selecciona_dia_anterior">Seleciona un dia posterior al de hoy</string>
+    <string name="ejecutado_con_exito">Ejecutado con exito</string>
+    <string name="adjunta_id_gym">Adjunta el ID de tu gimnasio (8 numeros)</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="insctito_exito">\"Te has insctito con exito a \"</string>
+    <string name="id_correcta">\"Introduce una id correcta \"</string>
+    <string name="cancelado_operacion">Se ha cancelado la operación</string>
+    <string name="name">Name</string>
+    <string name="search_by_code">Buscar por codigo</string>
+    <string name="eliminar_usuario">Eliminar usuario</string>
+    <string name="cambiar_contrase_a">Cambiar contraseña</string>
 </resources>

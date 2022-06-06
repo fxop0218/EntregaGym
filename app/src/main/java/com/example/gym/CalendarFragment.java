@@ -1,21 +1,25 @@
 package com.example.gym;
 
-import android.app.usage.UsageEvents;
-import android.graphics.Color;
-import android.media.metrics.Event;
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.Toast;
 
-import com.google.android.material.tabs.TabLayout;
+import com.example.gym.gymOwner.createAct_activity;
+import com.example.gym.user.view_actividades_activity;
+
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +33,9 @@ public class CalendarFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private CalendarView cvCalendar;
+    private Date actualDate, selDate;
+    private Button bNewActividad, bSeeGymActivity, bSeeUpcoming;
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -83,17 +90,71 @@ public class CalendarFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
-        cvCalendar = (CalendarView) view.findViewById(R.id.cvCalendar);
+        bNewActividad = view.findViewById(R.id.bNewActivity);
+        bSeeUpcoming = view.findViewById(R.id.bSeeUpcoming);
+        bSeeGymActivity = view.findViewById(R.id.bSeeGymActivity);
+
+        cvCalendar = view.findViewById(R.id.cvCalendar);
+        actualDate = new Date();
+        //Dependiendo de el tipo de usuario que se registre, se mostraran unos bottones o otros
+        if (UserSession.getUsuario().isGymOwner()) {
+            bNewActividad.setVisibility(View.VISIBLE);
+            bSeeUpcoming.setVisibility(View.INVISIBLE);
+            bSeeGymActivity.setVisibility(View.INVISIBLE);
+        } else {
+            bNewActividad.setVisibility(View.INVISIBLE);
+            bSeeUpcoming.setVisibility(View.VISIBLE);
+            bSeeGymActivity.setVisibility(View.VISIBLE);
+        }
+
+
         cvCalendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int i, int i1, int i2) {
-                date = i + "/" + i1 + "/" +i2;
-                Log.d("CalendarFragment", "onSelectedDayChange: date:"+ date);
-                Toast.makeText(getContext(), date, Toast.LENGTH_SHORT).show();
+                date = i2 + "/" + i1 + "/" +i;
+
+                try {
+                    selDate = sdf.parse(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
+        bNewActividad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (selDate != null && !date.isEmpty()) {
+                    if (!actualDate.before(selDate)) {
+
+                        Toast.makeText(view.getContext(), R.string.ejecutado_con_exito, Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(getContext(), createAct_activity.class);
+                        i.putExtra("day", date); // TODO tener en cuenta que no se puede clickar al boton cuando la fecha es inferior a la atual o igual.
+                        startActivity(i);
+                    } else {
+                        Toast.makeText(view.getContext(), R.string.selecciona_dia_anterior, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(view.getContext(), R.string.error_seleccion_dia, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        bSeeGymActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (selDate != null && !date.isEmpty()) {
+                    if (!actualDate.before(selDate)) {
+                        Toast.makeText(view.getContext(), R.string.Actividades, Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(getContext(), view_actividades_activity.class);
+                        i.putExtra("day", date); //Pasa la fecha escogida por el usuario
+                        startActivity(i);
+                    }
+                }
+            }
+        });
 
         return view;
+
     }
 }

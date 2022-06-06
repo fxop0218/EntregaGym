@@ -1,6 +1,7 @@
 package com.example.gym;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -20,6 +21,11 @@ public class MainActivity extends AppCompatActivity {
     CalendarFragment calendarFragment = new CalendarFragment();
     TiendaFragment tiendaFragment = new TiendaFragment();
     UserFragment userFragment = new UserFragment();
+
+    /**
+     * Actividad principal donde se respaldan en resto de fragmetos
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
         loadFragment(mainFragment);
     }
 
+    /**
+     * Menu en la parte inferior que permite la navegacion entre diferentes fragmentos
+     *
+     */
     private final BottomNavigationView.OnItemSelectedListener mOnNavegationItemSelectedListener = new BottomNavigationView.OnItemSelectedListener() {
         @SuppressLint("NonConstantResourceId")
         @Override
@@ -57,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Carga los fragmentos
+     * @param fragment, fragmento que tiene que cargar
+     */
     public void loadFragment(Fragment fragment){
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

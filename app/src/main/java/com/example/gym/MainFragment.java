@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
@@ -20,6 +21,8 @@ import android.widget.PopupWindow;
  * create an instance of this fragment.
  */
 public class MainFragment extends Fragment {
+
+    private Button bt_cardio;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,16 +64,32 @@ public class MainFragment extends Fragment {
         }
     }
 
+    /**
+     * Fragmento principal donde se muestran las actividades, dietas y ejercicios
+     * Menu por defecto al iniciar sesión
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return v
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false);
-    }
 
-    public void onButtonShowPopupWindowClick(View view) {
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        Intent i = new Intent(getContext(), DietaHipocalorica.class);
-        startActivity(i);
+        bt_cardio = view.findViewById(R.id.bt_cardio);
+        bt_cardio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(view.getContext(), Cardio.class);
+                startActivity(intent);
+            }
+        });
+
+        return view;
     }
 }

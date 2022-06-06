@@ -2,37 +2,37 @@ package com.example.gym.Clases;
 
 public class Reserva {
 
-    private int idReserva;
-    private Usuario usuario;
-    private Actividad actividad;
+    private String usuario;
+    private String idReserva;
+    private int actividad;
 
-    public Reserva(Usuario usuario, Actividad actividad, int idReserva) {
+    public Reserva(String usuario, int actividad, String idReserva) {
         this.usuario = usuario;
         this.actividad = actividad;
         this.idReserva = idReserva;
     }
 
-    public Usuario getUsuario() {
+    public String getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
 
-    public Actividad getActividad() {
+    public int getActividad() {
         return actividad;
     }
 
-    public void setActividad(Actividad actividad) {
+    public void setActividad(int actividad) {
         this.actividad = actividad;
     }
 
-    public int getIdReserva() {
+    public String getIdReserva() {
         return idReserva;
     }
 
-    public void setIdReserva(int idReserva) {
+    public void setIdReserva(String idReserva) {
         this.idReserva = idReserva;
     }
 }

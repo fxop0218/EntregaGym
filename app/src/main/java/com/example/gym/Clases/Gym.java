@@ -18,6 +18,8 @@ public class Gym {
         this.hora_cerrada = hora_cerrada;
     }
 
+    public Gym() { }
+
     public int getIdGym() {
         return idGym;
     }

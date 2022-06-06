@@ -9,7 +9,6 @@
 
     <ImageView
         android:id="@+id/imgicono"
-        android:background="@color/azul_logo"
         android:layout_width="300dp"
         android:layout_height="300dp"
         app:layout_constraintTop_toTopOf="parent"

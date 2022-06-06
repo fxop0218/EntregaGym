@@ -2,7 +2,7 @@ package com.example.gym.pojos;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class FireBaseConnection {
+public class FireConnection {
     private static FirebaseFirestore db;
 
 

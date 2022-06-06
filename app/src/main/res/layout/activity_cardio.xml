@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wallpaper_grade"
+    tools:context=".Cardio">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/blanco"
+                android:gravity="center"
+                android:text="@string/el_ptica"
+                android:background="@drawable/boton2"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/ivEliptica"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                app:srcCompat="@drawable/elipticaa"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:textColor="@color/blanco"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="16sp"
+                android:layout_marginRight="20dp"
+                android:text="@string/eliptica_exp"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/blanco"
+                android:gravity="center"
+                android:text="@string/stepper"
+                android:background="@drawable/boton2"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/ivStepper"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                app:srcCompat="@drawable/stepper"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="16sp"
+                android:textColor="@color/blanco"
+                android:layout_marginRight="20dp"
+                android:text="@string/stepper_exp"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:textColor="@color/blanco"
+                android:text="@string/bicicleta_estatica"
+                android:background="@drawable/boton2"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/ivBicicletaEstatica"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:textColor="@color/blanco"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                app:srcCompat="@drawable/bicicleta_estatica"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="16sp"
+                android:textColor="@color/blanco"
+                android:layout_marginRight="20dp"
+                android:text="@string/bicicleta_est_exp"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/blanco"
+                android:gravity="center"
+                android:text="@string/cinta_de_correr"
+                android:background="@drawable/boton2"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/ivCintaDeCorrer"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                app:srcCompat="@drawable/cinta_de_correr"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/blanco"
+                android:textSize="16sp"
+                android:layout_marginRight="20dp"
+                android:text="@string/cintadecorrer_expl"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:textColor="@color/blanco"
+                android:text="@string/remo"
+                android:background="@drawable/boton2"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/ivRemo"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                app:srcCompat="@drawable/remo"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/blanco"
+                android:layout_marginLeft="20dp"
+                android:textSize="16sp"
+                android:layout_marginRight="20dp"
+                android:text="@string/remo_exp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
