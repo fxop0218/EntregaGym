@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="90dp"
+            android:background="@drawable/user_design"
+            android:orientation="vertical">
+
+            <ImageView
+                android:src="@drawable/ic_user_icono"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="100dp"/>
+
+            <TextView
+                android:id="@+id/tvUsername"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:text="PERFIL DE USER"
+                android:gravity="center"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/boton2"
+                android:drawableLeft="@drawable/ic_username_perfil"
+                android:text="@string/cambiar_nombre_y_apellidos"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/boton2"
+                android:drawableLeft="@drawable/ic_fecha_aniversario"
+                android:text="@string/cambiar_fecha_nacimiento"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/boton2"
+                android:drawableLeft="@drawable/ic_mis_actividades"
+                android:text="@string/mis_actividades"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/boton2"
+                android:drawableLeft="@drawable/ic_cerrar_sesion"
+                android:text="@string/cerrar_sesion"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

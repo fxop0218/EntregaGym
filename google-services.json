@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "717130565798",
+    "project_id": "gymproject-a37f4",
+    "storage_bucket": "gymproject-a37f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717130565798:android:f2f6ce0b8385b1b3608c67",
+        "android_client_info": {
+          "package_name": "com.francisjan.gym"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "717130565798-4h4qrj0u0ffd42ka299us6sbsm03ks55.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQCB7Z46iHPRKDZiBGU4rSUM2WX4B8Gyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "717130565798-4h4qrj0u0ffd42ka299us6sbsm03ks55.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

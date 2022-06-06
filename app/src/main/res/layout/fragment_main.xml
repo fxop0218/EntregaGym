@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="713dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/ivAzul"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginRight="30dp"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@color/azul_logo" />
+
+                    <TextView
+                        android:id="@+id/tvRutines"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="30dp"
+                        android:gravity="center"
+                        android:text="@string/rutinas"
+                        android:textSize="19sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/ImageRutinas"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="30dp"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/imagen_nivel_avanzado" />
+
+                    <Button
+                        android:id="@+id/bt_principiante"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/boton2"
+                        android:drawableLeft="@drawable/ic_principiante"
+                        android:text="@string/rutinas_nivel_principiante" />
+
+                    <Button
+                        android:id="@+id/bt_intermedio"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/boton2"
+                        android:drawableLeft="@drawable/intermedio"
+                        android:text="@string/rutinas_nivel_intermedio" />
+
+                    <Button
+                        android:id="@+id/bt_avanzado"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/boton2"
+                        android:drawableLeft="@drawable/avanzado"
+                        android:text="@string/rutinas_nivel_avanzado" />
+
+                    <TextView
+                        android:id="@+id/tvDietas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="30dp"
+                        android:gravity="center"
+                        android:text="@string/dietas"
+                        android:textSize="19sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/ImageDietas"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="30dp"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/dieta_hipocalorica" />
+
+                    <Button
+                        android:id="@+id/bt_hipocalorica"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/boton2"
+                        android:drawableLeft="@drawable/ic_hipocalorica"
+                        android:onClick="onButtonShowPopupWindowClick"
+                        android:text="@string/Dieta_hipocalórica" />
+
+                    <Button
+                        android:id="@+id/bt_proteica"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/boton2"
+                        android:drawableLeft="@drawable/ic_proteica"
+                        android:text="@string/Dieta_proteica" />
+
+                    <Button
+                        android:id="@+id/bt_vegetariana"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/boton2"
+                        android:drawableLeft="@drawable/ic_vegetariana"
+                        android:text="@string/Dieta_Vegetariana" />
+
+                    <TextView
+                        android:id="@+id/tvMaquinas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="30dp"
+                        android:gravity="center"
+                        android:text="@string/maquinas"
+                        android:textSize="19sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/ImageMaquinas"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="30dp"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/imagen_nivel_principiante" />
+
+                    <Button
+                        android:id="@+id/bt_cardio"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/boton2"
+                        android:drawableLeft="@drawable/ic_cardio"
+                        android:text="@string/Cardio" />
+
+                    <Button
+                        android:id="@+id/bt_poleas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/boton2"
+                        android:drawableLeft="@drawable/ic_poleas"
+                        android:text="@string/Con_poleas" />
+
+                    <Button
+                        android:id="@+id/bt_pesas"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/boton2"
+                        android:drawableLeft="@drawable/ic_pesas"
+                        android:text="@string/Con_pesas" />
+
+                </LinearLayout>
+            </ScrollView>
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

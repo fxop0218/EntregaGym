@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">gym</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Correo electronico</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_register">Register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Bienvenido !"</string>
+    <string name="invalid_username">No es un usuario valido</string>
+    <string name="invalid_password">La contraseña tiene que tener mas de 5 caracteres</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="bottom_nav_home">Home</string>
+    <string name="bottom_nav_calendar">Calendari</string>
+    <string name="bottom_nav_tienda">Tienda</string>
+    <string name="bottom_nav_user">Usuario</string>
+    <string name="title_activity_bottom_nav">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <!--- String fragment Calendar -->
+    <string name="bViewActivities">View activities</string>
+    <string name="bViewUpcomingActivities">See upcoming activities</string>
+    <!--- String fragment Register -->
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="etDni">DNI</string>
+    <string name="etNombre">Nombre</string>
+    <string name="etApellidos">Apellidos</string>
+    <string name="etFecha_de_nacimiento">Fecha de Nacimiento</string>
+    <string name="etUserName">Nombre de Usuario</string>
+    <string name="etPwd">Contraseña</string>
+    <string name="etRepeatPwd">Repetir contraseña</string>
+    <string name="rutinas">RUTINAS</string>
+    <string name="rutinas_nivel_principiante">Nivel principiante</string>
+    <string name="rutinas_nivel_intermedio">Nivel Intermedio</string>
+    <string name="rutinas_nivel_avanzado">Nivel avanzado</string>
+    <string name="dietas">DIETAS</string>
+    <string name="Dieta_hipocalórica">Dieta Hipocalórica</string>
+    <string name="Dieta_proteica">Dieta Proteica</string>
+    <string name="Dieta_Vegetariana">Dieta Vegetariana</string>
+    <string name="maquinas">MAQUINAS</string>
+    <string name="Cardio">Cardio</string>
+    <string name="Con_poleas">Con Poleas</string>
+    <string name="Con_pesas">Con Pesas</string>
+    <string name="cambiar_nombre_de_ususario">CAMBIAR NOMBRE DE USUSARIO</string>
+    <string name="cambiar_nombre_y_apellidos">Cambiar nombre y apellidos</string>
+    <string name="cambiar_fecha_nacimiento">Cambiar fecha de nacimiento</string>
+    <string name="mis_actividades">Mis actividades</string>
+    <string name="cerrar_sesion">cerrar sesion</string>
+    <string name="material">Material</string>
+    <string name="suplementos">Suplementos</string>
+    <string name="vestuario">Vestuario</string>
+</resources>
