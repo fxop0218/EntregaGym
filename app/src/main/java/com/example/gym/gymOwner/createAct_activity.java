@@ -199,16 +199,27 @@ public class createAct_activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int idGym = UserSession.getUsuario().getIdGimnasios();
-                Actividad a1 = new Actividad(Integer.parseInt(etActivityID.getText().toString()), etNombreAct.getText().toString(),
-                        idGym, Integer.parseInt(etAforoMax.getText().toString()),
-                        ComFunctions.strToDate(etHoraA.getText().toString()), ComFunctions.strToDate(etHoraC.getText().toString()), day);
-                PojosClass.getActividadesDao().setActiviad(a1);
-                Toast.makeText(getApplicationContext(), "Actividad añadida con exito", Toast.LENGTH_SHORT).show();
-                finish();
+                PojosClass.getActividadesDao().getActividad(Integer.parseInt(etActivityID.getText().toString()), (actividad -> {
+                    if (actividad != null) {
+                        Toast.makeText(getApplicationContext(), "Ya existe una actividad con esa id", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Actividad a1 = new Actividad(Integer.parseInt(etActivityID.getText().toString()), etNombreAct.getText().toString(),
+                                idGym, Integer.parseInt(etAforoMax.getText().toString()),
+                                ComFunctions.strToDate(etHoraA.getText().toString()), ComFunctions.strToDate(etHoraC.getText().toString()), day);
+                        PojosClass.getActividadesDao().setActiviad(a1);
+                        Toast.makeText(getApplicationContext(), "Actividad añadida con exito", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }), e -> {
+                    Actividad a1 = new Actividad(Integer.parseInt(etActivityID.getText().toString()), etNombreAct.getText().toString(),
+                            idGym, Integer.parseInt(etAforoMax.getText().toString()),
+                            ComFunctions.strToDate(etHoraA.getText().toString()), ComFunctions.strToDate(etHoraC.getText().toString()), day);
+                    PojosClass.getActividadesDao().setActiviad(a1);
+                    Toast.makeText(getApplicationContext(), "Actividad añadida con exito", Toast.LENGTH_SHORT).show();
+                    finish();
+                });
             }
         });
-
-
     }
     private boolean setRegisterEnabled() {
         if (ComFunctions.is_not_correct(etNombreAct, 3, 40)) return false;

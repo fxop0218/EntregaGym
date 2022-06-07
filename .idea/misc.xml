@@ -77,10 +77,11 @@
         <entry key="..\:/AndroidStudiProject/gym/gimnasioEpico/app/src/main/res/layout/fragment_user.xml" value="0.3392210144927536" />
         <entry key="..\:/AndroidStudiProject/gym/gimnasioEpico/app/src/main/res/layout/rv_items.xml" value="0.20520833333333333" />
         <entry key="..\:/AndroidStudiProject/gym/gimnasioEpico/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/AdministradorGym/app/src/main/res/layout/activity_create_act.xml" value="0.3115942028985507" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
