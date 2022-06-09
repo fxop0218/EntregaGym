@@ -21,6 +21,7 @@ public class Actividad {
         this.nombre = nombre;
         this.gymID = gymID;
         this.aforo = aforo;
+        this.aforo_actual = 0;
         this.hora_inicio = hora_inicio;
         this.hora_fin = hora_fin;
         this.dia = dia;
@@ -59,11 +60,11 @@ public class Actividad {
     }
 
     public int getAforo_actual() {
-        return aforo;
+        return aforo_actual;
     }
 
     public void setAforo_actual(int aforo) {
-        this.aforo = aforo;
+        this.aforo_actual = aforo_actual;
     }
 
     public void sumAforo_actual() {

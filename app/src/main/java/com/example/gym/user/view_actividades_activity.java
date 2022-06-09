@@ -29,22 +29,25 @@ import com.example.gym.UserSession;
 import com.example.gym.data.ComFunctions;
 import com.example.gym.pojos.FireConnection;
 import com.example.gym.pojos.PojosClass;
-import com.example.gym.reciclerLayout.Adapter;
+import com.example.gym.reciclerLayout.AdapterActivity;
 import com.example.gym.reciclerLayout.Model;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class view_actividades_activity extends AppCompatActivity {
     String day = "01/01/2000";
@@ -54,9 +57,15 @@ public class view_actividades_activity extends AppCompatActivity {
     List<Actividad> correctActivity = new ArrayList<>();
     private  ArrayAdapter<Actividad> arrayAdapter;
     private List<Actividad> activityArray = new ArrayList<>();
-    //ArrayList<Actividad> correctActivity = new ArrayList<>();
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference activityRef = db.collection(ComFunctions.ACTIVIDADES);
+
+    private List<String> nombreActividad = new ArrayList<>();
+    private List<String> idActividad = new ArrayList<>();
+    private List<String> horaCierre = new ArrayList<>();
+    private List<String> horaApertura = new ArrayList<>();
+    private AdapterActivity adapterActivity;
+
+    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+    private FirebaseFirestore db;
 
     ListView lvActividades;
 
@@ -67,6 +76,7 @@ public class view_actividades_activity extends AppCompatActivity {
         bClose = findViewById(R.id.bClose);
         bAddByCode = findViewById(R.id.bAddCode);
         Intent i = getIntent();
+        db = FirebaseFirestore.getInstance();
         lvActividades = findViewById(R.id.lv_Actividades);
         day = i.getStringExtra("day");
 /* TODO intentar hacer que funcione el reciclerView
@@ -77,23 +87,6 @@ public class view_actividades_activity extends AppCompatActivity {
         rv_actividades.setAdapter(adapter);
 
  */
-        try {
-            prueba(UserSession.getUsuario().getIdGimnasios(), day);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            activityArray = PojosClass.getActividadesDao().getGymActivity(UserSession.getUsuario().getIdGimnasios(), day ,task -> {
-                correctActivity = correctActivitys(activityArray);
-            }, (e -> {
-                // Cuando no hay actividades o no estas apuntado a un gymnasio
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }) );
-        } catch (Exception e) {
-            Toast.makeText(this, "No se ha encontrado ninguna actividad relacionada con el dia", Toast.LENGTH_SHORT).show();
-        }
-
 
         arrayAdapter = new ArrayAdapter<Actividad>(this, R.layout.activity_view_actividades, R.id.textView, correctActivity);
         lvActividades.setAdapter(arrayAdapter);
@@ -119,7 +112,7 @@ public class view_actividades_activity extends AppCompatActivity {
                 if (notAlisted) {
                     try {
                         PojosClass.getReservaDao().addReserva(new Reserva(UserSession.getUsuario().getUser(), act.getIdActividad() ,UserSession.getUsuario().getUser() + "" + act.getIdActividad()));
-                        act.sumAforo_actual();
+                        act.resAforo_actual();
                         PojosClass.getActividadesDao().setActiviad(act); //Se actualiza la actividad
 
                     } catch (Exception e) {
@@ -154,11 +147,17 @@ public class view_actividades_activity extends AppCompatActivity {
                         try {
                             PojosClass.getActividadesDao().getActividad(Integer.parseInt(activityID.getText().toString()), (actividad ->{
                                 try {
-                                    PojosClass.getUsuarioDAO().addGym(Integer.parseInt(activityID.getText().toString()));
-                                    Reserva r1 = new Reserva(UserSession.getUsuario().getUser(), actividad.getIdActividad(), UserSession.getUsuario().getUser()+ actividad.getIdActividad());
-                                    PojosClass.getReservaDao().addReserva(r1); // Se añade la nueva id de gimnasion en la session de usuario actual
-                                    Toast.makeText(view.getContext(), getString(R.string.insctito_exito) + actividad.getIdActividad() + " " + actividad.getHora_inicio() + " " + actividad.getHora_fin() + " day " + actividad.getDia(), Toast.LENGTH_SHORT).show();
-
+                                    if (actividad.getAforo_actual() == actividad.getAforo()) {
+                                        PojosClass.getUsuarioDAO().addGym(Integer.parseInt(activityID.getText().toString()));
+                                        Reserva r1 = new Reserva(UserSession.getUsuario().getUser(), actividad.getIdActividad(), UserSession.getUsuario().getUser()+ actividad.getIdActividad());
+                                        PojosClass.getReservaDao().addReserva(r1); // Se añade la nueva id de gimnasion en la session de usuario actual
+                                        Toast.makeText(view.getContext(), getString(R.string.insctito_exito) + actividad.getIdActividad(), Toast.LENGTH_SHORT).show();
+                                        //Resta uno en el aforo de la actividad
+                                        actividad.sumAforo_actual();
+                                        PojosClass.getActividadesDao().setActiviad(actividad);
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "La actividad esta llena", Toast.LENGTH_SHORT).show();
+                                    }
                                 } catch (Exception e) {
                                     Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
@@ -178,6 +177,15 @@ public class view_actividades_activity extends AppCompatActivity {
                 alertBuilder.show();
             }
         });
+        try {
+            prueba(UserSession.getUsuario().getIdGimnasios(), day);
+        } catch (Exception e) {
+            if (UserSession.getUsuario().getIdGimnasios() != 0) {
+                Toast.makeText(this, "No hay ninguna actividad", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Inscribete a un gimansio para ver las actividades", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private List<Actividad> correctActivitys(List<Actividad> allActivitys) {
@@ -191,19 +199,57 @@ public class view_actividades_activity extends AppCompatActivity {
         return correctActividades;
     }
 
-    public void prueba(int gymID, String actDate) throws Exception {
-        activityRef.limit(3).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+    public void prueba(int gymID, String actDate) throws Exception{
+        String gymIDString = gymID + "";
+        List<String> idActividad = new ArrayList<>();
+        db.collection(ComFunctions.ACTIVIDADES).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                List<Actividad> actividadesL = new ArrayList<>();
-                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                    Actividad act = documentSnapshot.toObject(Actividad.class);
-                    act.setIdActividad(Integer.parseInt(documentSnapshot.getId()));
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                Map<String, Object> activityInfo = null;
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String gym = document.getData().get("gymID").toString();
+                        if (gym.equals(gymIDString)) {
+                            activityInfo = document.getData();
+                        }
+                    }
                 }
-                activityArray = actividadesL;
+                if (activityInfo.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "No hay actividades disponibles este dia", Toast.LENGTH_SHORT).show();
+                } else {
+                    idActividad.addAll(activityInfo.keySet()); //TODO mirar que esta pasando aqui
+                    getActividad(idActividad);
+                }
             }
         });
     }
+
+    private void getActividad(List<String> idActividad) {
+        nombreActividad = new ArrayList<>();
+        horaApertura = new ArrayList<>();
+        horaCierre = new ArrayList<>();
+        db.collection(ComFunctions.ACTIVIDADES).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        for (int i = 0; i<idActividad.size(); i++) {
+                            if (document.getId().equals(idActividad.get(i))){
+                                nombreActividad.add(document.getData().get("nombre").toString());
+                                String hora_inicio = sdf.format(document.getDate("hora_inicio"));
+                                String hora_fin = sdf.format(document.get("hora_fin"));
+                                horaApertura.add(hora_inicio);
+                                horaCierre.add(hora_fin);
+                            }
+                        }
+                    }
+                }
+                adapterActivity = new AdapterActivity(view_actividades_activity.this, idActividad, nombreActividad, horaApertura, horaCierre);
+                lvActividades.setAdapter(adapterActivity);
+            }
+        });
+    }
+
 
     private void queryAllProjects() {
         //I've already tried to make a local list and return that, however,

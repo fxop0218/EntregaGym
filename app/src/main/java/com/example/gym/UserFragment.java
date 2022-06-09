@@ -12,6 +12,7 @@ import android.telephony.RadioAccessSpecifier;
 import android.telephony.TelephonyManager;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -164,16 +165,27 @@ public class UserFragment extends Fragment {
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(v.getContext());
                 alertBuilder.setTitle("Intorduce tu constraseña actual");
                 final EditText etPwd = new EditText(v.getContext());
+                final EditText etNewPwd = new EditText(v.getContext());
                 etPwd.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                etPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 etPwd.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)}); // Se añade un maximo de numeros al edit text
+
+                etNewPwd.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                etNewPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                etNewPwd.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)}); // Se añade un maximo de numeros al edit text
+                etNewPwd.setHint("Nueva contraseña");
+
                 alertBuilder.setView(etPwd);
+                alertBuilder.setView(etNewPwd);
+
                 alertBuilder.setCancelable(true);
                 alertBuilder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         try {
                             if (Encript.encriptar(etPwd.getText().toString()).equals(UserSession.getUsuario().getPassword())) {
-                                correct[0] = true;
+                                UserSession.getUsuario().setPassword(Encript.encriptar(etNewPwd.getText().toString()));
+                                PojosClass.getUsuarioDAO().setUsuario(UserSession.getUsuario());
                             } else {
                                 Toast.makeText(v.getContext(), "La contraseña no coincide", Toast.LENGTH_SHORT).show();
                             }
@@ -183,31 +195,6 @@ public class UserFragment extends Fragment {
                     }
                 });
                 alertBuilder.show();
-                if (correct[0]) {
-                    AlertDialog.Builder alertBuilder2 = new AlertDialog.Builder(v.getContext());
-                    final EditText etNewPwd = new EditText(v.getContext());
-                    etNewPwd.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    etNewPwd.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
-                    alertBuilder2.setView(etNewPwd);
-                    alertBuilder2.setCancelable(true);
-
-                    alertBuilder2.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            if (etNewPwd.getText().toString().length() < 7) {
-                                Toast.makeText(v.getContext(), "La contraseña tiene que tener 6 caracteres minimo", Toast.LENGTH_SHORT).show();
-                            } else {
-                                try {
-                                    UserSession.getUsuario().setPassword(Encript.encriptar(etNewPwd.getText().toString()));
-                                    PojosClass.getUsuarioDAO().setUsuario(UserSession.getUsuario());
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    });
-                    alertBuilder2.show();
-                }
             }
         });
 
@@ -216,7 +203,9 @@ public class UserFragment extends Fragment {
             public void onClick(View view) {
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(v.getContext());
                 final EditText etPwd = new EditText(v.getContext());
+                alertBuilder.setTitle("Intorduce tu constraseña actual");
                 etPwd.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                etPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 etPwd.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
                 alertBuilder.setView(etPwd);
                 alertBuilder.setCancelable(true);
