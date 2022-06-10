@@ -12,6 +12,10 @@ public class Reserva {
         this.idReserva = idReserva;
     }
 
+    public Reserva() {
+
+    }
+
     public String getUsuario() {
         return usuario;
     }

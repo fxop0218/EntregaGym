@@ -120,4 +120,6 @@
     <string name="search_by_code">Buscar por codigo</string>
     <string name="eliminar_usuario">Eliminar usuario</string>
     <string name="cambiar_contrase_a">Cambiar contraseña</string>
+    <string name="ya_estas_incrito">Ya estas incirito a la actividad</string>
+    <string name="reintentar">Intentalo de nuevo</string>
 </resources>

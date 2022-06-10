@@ -44,6 +44,7 @@ import com.google.firebase.firestore.auth.User;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -67,7 +68,7 @@ public class view_actividades_activity extends AppCompatActivity {
     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
     private FirebaseFirestore db;
 
-    ListView lvActividades;
+    private ListView lvActividades;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,42 +86,54 @@ public class view_actividades_activity extends AppCompatActivity {
         //TODO bucle con lo siguiente para añadir cosas
         adapter = new Adapter(getApplicationContext(), modelList);
         rv_actividades.setAdapter(adapter);
-
  */
-
-        arrayAdapter = new ArrayAdapter<Actividad>(this, R.layout.activity_view_actividades, R.id.textView, correctActivity);
-        lvActividades.setAdapter(arrayAdapter);
-
+        //try {
+            prueba(UserSession.getUsuario().getIdGimnasios(), day);
+            /*
+        } catch (Exception e) {
+            if (UserSession.getUsuario().getIdGimnasios() != 0) {
+                e.printStackTrace();
+                Toast.makeText(this, "No hay ninguna actividad", Toast.LENGTH_SHORT).show();
+            } else {
+                e.printStackTrace();
+                Toast.makeText(this, "Inscribete a un gimansio para ver las actividades", Toast.LENGTH_SHORT).show();
+            }
+        }
+        */
         lvActividades.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //TODO comprobar si el esta completo la actividad
                 //TODO apuntarse a la actividad
-                Actividad act = correctActivity.get(i);
-                ArrayList<Reserva> reservaList = PojosClass.getReservaDao().getReservaByUserName(UserSession.getUsuario().getUser());
-
-                boolean notAlisted = true;
-                int r = 0;
-                while (r < reservaList.size() && !notAlisted) {
-                    if (act.getIdActividad() == reservaList.get(r).getActividad()) {
-                        notAlisted = false;
+                String actID = idActividad.get(i);
+                Actividad act = PojosClass.getActividadesDao().getActividad(Integer.parseInt(actID), actividad -> {
+                    if (actividad.getAforo()==actividad.getAforo_actual()) {
+                        Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.aforo_maximo) , Toast.LENGTH_SHORT).show();
+                    } else {
+                        try  {
+                            Reserva res = PojosClass.getReservaDao().getReserva(UserSession.getUsuario().getUser()+actividad.getIdActividad(), reserva -> {
+                                Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.ya_estas_incrito),Toast.LENGTH_SHORT).show();
+                                reserva.getIdReserva();
+                            }, e -> {
+                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+                            if (res != null) {
+                                Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.ya_estas_incrito), Toast.LENGTH_SHORT).show();
+                            } else {
+                                PojosClass.getReservaDao().addReserva(new Reserva(UserSession.getUsuario().getUser(), actividad.getIdActividad() ,UserSession.getUsuario().getUser() + "" + actividad.getIdActividad()));
+                                actividad.sumAforo_actual();
+                                PojosClass.getActividadesDao().setActiviad(actividad);
+                            }
+                        } catch (Exception e) {
+                            PojosClass.getReservaDao().addReserva(new Reserva(UserSession.getUsuario().getUser(), actividad.getIdActividad() ,UserSession.getUsuario().getUser() + "" + actividad.getIdActividad()));
+                            actividad.sumAforo_actual();
+                            PojosClass.getActividadesDao().setActiviad(actividad);
+                        }
                     }
-                    r++;
-                }
-
-                if (notAlisted) {
-                    try {
-                        PojosClass.getReservaDao().addReserva(new Reserva(UserSession.getUsuario().getUser(), act.getIdActividad() ,UserSession.getUsuario().getUser() + "" + act.getIdActividad()));
-                        act.resAforo_actual();
-                        PojosClass.getActividadesDao().setActiviad(act); //Se actualiza la actividad
-
-                    } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), R.string.error_asignacion_actividad, Toast.LENGTH_SHORT).show();
-                    }
-                } else { //En caso de estar apuntado en la actividad, muestra un mensaeje;
-                    Toast.makeText(getApplicationContext(), R.string.ya_apuntado_actividad, Toast.LENGTH_SHORT).show();
-                }
+                }, e -> {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.reintentar), Toast.LENGTH_SHORT).show();
+                });
             }
         });
 
@@ -177,15 +190,7 @@ public class view_actividades_activity extends AppCompatActivity {
                 alertBuilder.show();
             }
         });
-        try {
-            prueba(UserSession.getUsuario().getIdGimnasios(), day);
-        } catch (Exception e) {
-            if (UserSession.getUsuario().getIdGimnasios() != 0) {
-                Toast.makeText(this, "No hay ninguna actividad", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Inscribete a un gimansio para ver las actividades", Toast.LENGTH_SHORT).show();
-            }
-        }
+
     }
 
     private List<Actividad> correctActivitys(List<Actividad> allActivitys) {
@@ -199,27 +204,26 @@ public class view_actividades_activity extends AppCompatActivity {
         return correctActividades;
     }
 
-    public void prueba(int gymID, String actDate) throws Exception{
+    public void prueba(int gymID, String actDate){
         String gymIDString = gymID + "";
-        List<String> idActividad = new ArrayList<>();
+        idActividad = new ArrayList<>();
         db.collection(ComFunctions.ACTIVIDADES).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Map<String, Object> activityInfo = null;
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        String gym = document.getData().get("gymID").toString();
-                        if (gym.equals(gymIDString)) {
-                            activityInfo = document.getData();
+                        if (document.getDouble("gymID") == (gymID)) {
+                            for (Map.Entry<String, Object> entry : document.getData().entrySet()) {
+                                if (entry.getKey().equals("idActividad")) {
+                                    idActividad.add(String.valueOf(entry.getValue()));
+                                }
+                            }
                         }
                     }
-                }
-                if (activityInfo.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "No hay actividades disponibles este dia", Toast.LENGTH_SHORT).show();
                 } else {
-                    idActividad.addAll(activityInfo.keySet()); //TODO mirar que esta pasando aqui
-                    getActividad(idActividad);
+                    return;
                 }
+                getActividad(idActividad);
             }
         });
     }
@@ -234,10 +238,11 @@ public class view_actividades_activity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         for (int i = 0; i<idActividad.size(); i++) {
+
                             if (document.getId().equals(idActividad.get(i))){
                                 nombreActividad.add(document.getData().get("nombre").toString());
                                 String hora_inicio = sdf.format(document.getDate("hora_inicio"));
-                                String hora_fin = sdf.format(document.get("hora_fin"));
+                                String hora_fin = sdf.format(document.getDate("hora_fin"));
                                 horaApertura.add(hora_inicio);
                                 horaCierre.add(hora_fin);
                             }
@@ -251,34 +256,7 @@ public class view_actividades_activity extends AppCompatActivity {
     }
 
 
-    private void queryAllProjects() {
-        //I've already tried to make a local list and return that, however,
-        //the compiler would force me to declare the list as final here, and it wouldn't solve anything.
-        db.collection(ComFunctions.ACTIVIDADES)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Actividad actividad = document.toObject(Actividad.class);
-                                activityArray.add(actividad);
 
-                            }
-                            //Here the list is OK. Filled with projects.
-                            //I'd like to save the state of the list from here
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Error al buscar actividades", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                })
-        .addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "No se ha encontrado ninguna atividad", Toast.LENGTH_SHORT).show();
-            }
-        });
         //Oddly enough, this log displays before the other logs.
         //Also, the list is empty here, which is probably what I'm unintentionally feeding into the Recycler View's adapter
-    }
 }

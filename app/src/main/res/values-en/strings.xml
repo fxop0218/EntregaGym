@@ -95,4 +95,7 @@
     <string name="search_by_code">Search by code</string>
     <string name="eliminar_usuario">Delete user</string>
     <string name="cambiar_contrase_a">Change password</string>
+    <string name="ya_estas_incrito">You are already incirito to the activity</string>
+    <string name="reintentar">Try again</string>
+
 </resources>

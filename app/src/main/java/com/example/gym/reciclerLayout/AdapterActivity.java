@@ -59,9 +59,9 @@ public class AdapterActivity extends ArrayAdapter {
         TextView tvHoraFin = (TextView) row.findViewById(R.id.activityHoraFin);
 
 
-        tvNombre.setText(nombreAct.get(position));
-        tvHoraInicio.setText(hora_inicio.get(position));
-        tvHoraFin.setText(hora_fin.get(position));
+        tvNombre.setText(context.getString(R.string.nombre) + ": " + nombreAct.get(position));
+        tvHoraInicio.setText(context.getString(R.string.horaA) + ": " +hora_inicio.get(position));
+        tvHoraFin.setText(context.getString(R.string.horaC) + ": " + hora_fin.get(position));
 
         return row;
     }
