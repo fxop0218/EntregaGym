@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gym">
+        <activity
+            android:name=".gymOwner.view_created_activity"
+            android:exported="false" />
         <activity android:name=".user.viewUpcomingActivity" />
         <activity
             android:name=".Cardio"
@@ -35,7 +38,7 @@
         <activity
             android:name=".data.RegisterGymActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan|adjustResize"/>
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".DietaHipocalorica"
             android:theme="@style/Theme.AppCompat.Dialog" />

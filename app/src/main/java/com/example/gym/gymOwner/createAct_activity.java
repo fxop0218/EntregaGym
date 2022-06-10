@@ -199,7 +199,7 @@ public class createAct_activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int idGym = UserSession.getUsuario().getIdGimnasios();
-                PojosClass.getActividadesDao().getActividad(Integer.parseInt(etActivityID.getText().toString()), (actividad -> {
+                Actividad act = PojosClass.getActividadesDao().getActividad(Integer.parseInt(etActivityID.getText().toString()), (actividad -> {
                     if (actividad != null) {
                         Toast.makeText(getApplicationContext(), "Ya existe una actividad con esa id", Toast.LENGTH_SHORT).show();
                     } else {

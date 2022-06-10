@@ -57,25 +57,12 @@ public class ReservaDAOImp implements reservaDAO{
 
     @Override
     public void deleteReserva(String userName, int acivityID) {
-        String[] reserveId = new String[1];
-        FirebaseFirestore db = FireConnection.getDb();
-        db.collection("Reserva")
-                .whereEqualTo(ComFunctions.ID_ACTIVIDAD, acivityID)
-                .whereEqualTo(ComFunctions.USER_NAME, userName)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                reserveId[0] = document.getString(ComFunctions.ID_RESERVA);
-                            }
-                        }
-                        // En caso de que no encuentre, continua, en caso contrario lo elimina
-                        if (!reserveId[0].isEmpty()) {
-                            db.collection(ComFunctions.RESERVA).document(reserveId[0]).delete();
-                        }
-                    }
-                });
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(userName + acivityID).delete();
+    }
+    @Override
+    public void deleteReserva(String idReserva) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(idReserva).delete();
     }
 }

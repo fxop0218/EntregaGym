@@ -14,7 +14,10 @@ import android.widget.CalendarView;
 import android.widget.Toast;
 
 import com.example.gym.gymOwner.createAct_activity;
+import com.example.gym.gymOwner.view_created_activity;
+import com.example.gym.user.viewUpcomingActivity;
 import com.example.gym.user.view_actividades_activity;
+import com.google.firebase.internal.InternalTokenProvider;
 
 
 import java.text.ParseException;
@@ -34,7 +37,7 @@ public class CalendarFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private CalendarView cvCalendar;
     private Date actualDate, selDate;
-    private Button bNewActividad, bSeeGymActivity, bSeeUpcoming;
+    private Button bNewActividad, bSeeGymActivity, bSeeUpcoming, bViewOwnerActivitys;
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     // TODO: Rename and change types of parameters
@@ -93,6 +96,7 @@ public class CalendarFragment extends Fragment {
         bNewActividad = view.findViewById(R.id.bNewActivity);
         bSeeUpcoming = view.findViewById(R.id.bSeeUpcoming);
         bSeeGymActivity = view.findViewById(R.id.bSeeGymActivity);
+        bViewOwnerActivitys = view.findViewById(R.id.bSeeUpcomingOwner);
 
         cvCalendar = view.findViewById(R.id.cvCalendar);
         actualDate = new Date();
@@ -101,8 +105,10 @@ public class CalendarFragment extends Fragment {
             bNewActividad.setVisibility(View.VISIBLE);
             bSeeUpcoming.setVisibility(View.INVISIBLE);
             bSeeGymActivity.setVisibility(View.INVISIBLE);
+            bViewOwnerActivitys.setVisibility(View.VISIBLE);
         } else {
             bNewActividad.setVisibility(View.INVISIBLE);
+            bViewOwnerActivitys.setVisibility(View.INVISIBLE);
             bSeeUpcoming.setVisibility(View.VISIBLE);
             bSeeGymActivity.setVisibility(View.VISIBLE);
         }
@@ -111,8 +117,15 @@ public class CalendarFragment extends Fragment {
         cvCalendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int i, int i1, int i2) {
-                date = i2 + "/" + i1 + "/" +i;
+                if (i1 < 10) {
+                    date = i2 + "/0" + i1 + "/" + i;
 
+                } else if (i2 < 10) {
+                    date = "0"+i2 + "/" + i1 + "/" + i;
+
+                } else {
+                    date = i2 + "/" + i1 + "/" + i;
+                }
                 try {
                     selDate = sdf.parse(date);
                 } catch (ParseException e) {
@@ -151,6 +164,22 @@ public class CalendarFragment extends Fragment {
                         startActivity(i);
                     }
                 }
+            }
+        });
+
+        bViewOwnerActivitys.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), view_created_activity.class);
+                startActivity(i);
+            }
+        });
+
+        bSeeUpcoming.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), viewUpcomingActivity.class);
+                startActivity(i);
             }
         });
 

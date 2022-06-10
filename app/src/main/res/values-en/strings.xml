@@ -97,5 +97,7 @@
     <string name="cambiar_contrase_a">Change password</string>
     <string name="ya_estas_incrito">You are already incirito to the activity</string>
     <string name="reintentar">Try again</string>
+    <string name="si">Yes</string>
+    <string name="dia">Day</string>
 
 </resources>

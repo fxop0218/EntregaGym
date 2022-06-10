@@ -124,4 +124,9 @@ public class ActividadesDAOImp implements ActividadesDAO{
         }
         return act[0];
     }
+
+    public void deleteActividad(int acivityID) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Actividades").document(acivityID+"").delete();
+    }
 }

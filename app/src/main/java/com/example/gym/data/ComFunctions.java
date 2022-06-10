@@ -122,6 +122,13 @@ public class ComFunctions {
     }
 
     public static Date getActualDate() {
-        return new Date();
+        Date d1 = new Date();
+        String d2 = sdf.format(d1);
+        try {
+            d1 = sdf.parse(d2);
+        } catch (Exception e){
+            return new Date();
+        }
+        return d1;
     }
 }

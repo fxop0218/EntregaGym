@@ -1,15 +1,15 @@
-package com.example.gym.user;
+package com.example.gym.gymOwner;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,6 +21,7 @@ import com.example.gym.data.ComFunctions;
 import com.example.gym.pojos.PojosClass;
 import com.example.gym.reciclerLayout.AdapterActivity;
 import com.example.gym.reciclerLayout.AdapterActivityOwner;
+import com.example.gym.user.view_actividades_activity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,7 +35,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class viewUpcomingActivity extends AppCompatActivity {
+public class view_created_activity extends AppCompatActivity {
 
     private ListView lvUpcomign;
     private Button bCloseUp;
@@ -43,21 +44,20 @@ public class viewUpcomingActivity extends AppCompatActivity {
     private List<String> idActividad = new ArrayList<>();
     private List<String> horaCierre = new ArrayList<>();
     private List<String> horaApertura = new ArrayList<>();
-    private List<String> diaAct = new ArrayList<>();
+    private List<String> diaActividad = new ArrayList<>();
+    private List<String> idReserva = new ArrayList<>();
     private List<String> correctID = new ArrayList<>();
 
+    private Calendar calendar;
     private AdapterActivityOwner adapterActivity;
+
     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
     SimpleDateFormat sdfDay = new SimpleDateFormat("dd/MM/yyyy");
-    private Calendar calendar;
-
-    ArrayList<Reserva> registerArray = new ArrayList<>();
-    ArrayList<Actividad> activityArray = new ArrayList<>();
-    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_view_created);
 
         setContentView(R.layout.activity_view_upcoming);
         db = FirebaseFirestore.getInstance();
@@ -66,6 +66,8 @@ public class viewUpcomingActivity extends AppCompatActivity {
         calendar = Calendar.getInstance();
         calendar.setLenient(false);
         //lvUpcomign = findViewById(R.id.lvUpcoming);
+
+        prueba();
 
 
         /**
@@ -78,69 +80,78 @@ public class viewUpcomingActivity extends AppCompatActivity {
                 finish();
             }
         });
-        prueba();
 
         lvUpcomign.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //TODO poner un alert dialog que te permita ver mas detalles
-                //TODO En el alertDialog poner que puedas borrarte de la acividad
-
+                //TODO comprobar si el esta completo la actividad
+                //TODO apuntarse a la actividad
                 String actID = correctID.get(i);
                 Actividad act = PojosClass.getActividadesDao().getActividad(Integer.parseInt(actID), actividad -> {
-                    builder.setMessage(R.string.eliminar_actividad).setCancelable(false).setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            try {
-                                PojosClass.getReservaDao().deleteReserva(UserSession.getUsuario().getUser(), actividad.getIdActividad());
-                                actividad.resAforo_actual();
-                                PojosClass.getActividadesDao().setActiviad(actividad);
-                                Toast.makeText(getApplicationContext(), R.string.eliminar_reserva, Toast.LENGTH_SHORT).show();
-                            } catch (Exception e) {
-                                Toast.makeText(getApplicationContext(), R.string.erro_eliminar_actividad, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    if (actividad.getAforo()==actividad.getAforo_actual()) {
+                        Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.aforo_maximo) , Toast.LENGTH_SHORT).show();
+                    } else {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(view.getContext());
+                        dialog.setMessage("Eliminar actividad");
+                        dialog.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Toast.makeText(getApplicationContext(), R.string.accion_cancelada, Toast.LENGTH_SHORT).show();
+                            public void onClick(DialogInterface dialogInterface, int i3) {
+                                PojosClass.getActividadesDao().deleteActividad(Integer.parseInt(actID));
+                                getReservas(Integer.parseInt(actID));
+                            }
+                        }).setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i2) {
+                                finish();
                             }
                         });
-                        builder.show();
-                }, (e -> {
-                    Toast.makeText(getApplicationContext(), getText(R.string.erro_eliminar_actividad), Toast.LENGTH_SHORT).show();
-                }));
+                        dialog.show();
+                    }
+                }, e -> {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.reintentar), Toast.LENGTH_SHORT).show();
+                });
             }
         });
     }
 
-    private ArrayList<Actividad> getUserActivity (ArrayList<Reserva> registerArray) throws Exception {
-        ArrayList<Actividad> actList = new ArrayList<>();
-        if (registerArray.isEmpty()) {
-            throw new Exception(getString(R.string.error_encontrar_actividad));
-        } else {
-            for (Reserva reserva : registerArray) {
-                Actividad act = PojosClass.getActividadesDao().getActividadById(reserva.getActividad(), listener -> {
-
-                });
-                actList.add(act);
-            }
-        }
-        if (!actList.isEmpty()) return actList;
-        Toast.makeText(getApplicationContext(), R.string.error_encontrar_actividad_proxima, Toast.LENGTH_LONG).show();
-        throw new Exception(getString(R.string.no_proximas_actividades));
-    }
-
-    public void prueba(){
-        idActividad = new ArrayList<>();
+    public void getReservas(int actividadID){
+        idReserva = new ArrayList<>();
         db.collection("reservas").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        if (document.getString("usuario").equals(UserSession.getUsuario().getUser())) {
+                        double valD = document.getDouble("actividad");
+                        int val = (int) valD;
+                        if (val == actividadID) {
+                        for (Map.Entry<String, Object> entry : document.getData().entrySet()) {
+                            if (entry.getKey().equals("actividad")) {
+                                    idReserva.add(String.valueOf(entry.getValue()));
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    return;
+                }
+                for (int i = 0; i < idReserva.size(); i++) {
+                    PojosClass.getReservaDao().deleteReserva(idReserva.get(i));
+                }
+            }
+        });
+    }
+
+    public void prueba(){
+        idActividad = new ArrayList<>();
+        db.collection(ComFunctions.ACTIVIDADES).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (document.getDouble("gymID") == (UserSession.getUsuario().getIdGimnasios())) {
                             for (Map.Entry<String, Object> entry : document.getData().entrySet()) {
-                                if (entry.getKey().equals("actividad")) {
+                                if (entry.getKey().equals("idActividad")) {
                                     idActividad.add(String.valueOf(entry.getValue()));
                                 }
                             }
@@ -158,36 +169,36 @@ public class viewUpcomingActivity extends AppCompatActivity {
         nombreActividad = new ArrayList<>();
         horaApertura = new ArrayList<>();
         horaCierre = new ArrayList<>();
-        diaAct = new ArrayList<>();
         db.collection(ComFunctions.ACTIVIDADES).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         for (int i = 0; i<idActividad.size(); i++) {
-                            if (document.getId().equals(idActividad.get(i))){
+                            if (document.getId().equals(idActividad.get(i))) {
                                 Date diaCmp = document.getDate("dia");
                                 calendar.setTime(diaCmp);
                                 calendar.add(Calendar.MONTH, 1);
                                 diaCmp = calendar.getTime();
                                 if (diaCmp.after(ComFunctions.getActualDate()) || diaCmp.equals(ComFunctions.getActualDate())) {
-                                    double vl1 = document.getDouble("idActividad");
-                                    int vl2 = (int)vl1;
-                                    correctID.add(vl2+"");
-                                    nombreActividad.add(document.getData().get("nombre").toString());
+                                    double n1 = document.getDouble("idActividad");
+                                    int idCorrecto = (int) n1 ;
+                                    correctID.add(idCorrecto+"");
+                                    nombreActividad.add(document.getString("nombre"));
                                     String hora_inicio = sdf.format(document.getDate("hora_inicio"));
                                     String hora_fin = sdf.format(document.getDate("hora_fin"));
                                     horaApertura.add(hora_inicio);
                                     horaCierre.add(hora_fin);
+                                    calendar.setTime(document.getDate("dia"));
+                                    calendar.add(Calendar.MONTH, 1);
                                     String dia = sdfDay.format(calendar.getTime());
-                                    diaAct.add(dia);
+                                    diaActividad.add(dia);
                                 }
-
                             }
                         }
                     }
                 }
-                adapterActivity = new AdapterActivityOwner(viewUpcomingActivity.this, correctID, nombreActividad, horaApertura, horaCierre, diaAct);
+                adapterActivity = new AdapterActivityOwner(view_created_activity.this, correctID, nombreActividad, horaApertura, horaCierre, diaActividad);
                 lvUpcomign.setAdapter(adapterActivity);
             }
         });

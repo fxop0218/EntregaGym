@@ -12,4 +12,5 @@ public interface reservaDAO {
     public ArrayList<Reserva> getReservaByActivityID(int activityID);
     public ArrayList<Reserva> getReservaByUserName (String userName);
     public void deleteReserva (String userName, int acivityID);
+    public void deleteReserva(String idReserva);
 }

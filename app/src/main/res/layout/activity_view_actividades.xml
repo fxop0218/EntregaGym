@@ -23,7 +23,7 @@
 
     <ScrollView
         android:layout_width="413dp"
-        android:layout_height="445dp"
+        android:layout_height="390dp"
         app:layout_constraintBottom_toTopOf="@+id/bAddCode"
         app:layout_constraintTop_toBottomOf="@+id/tvActividades"
         tools:layout_editor_absoluteX="-2dp">
@@ -36,7 +36,7 @@
             <ListView
                 android:id="@+id/lv_Actividades"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="445dp" />
         </LinearLayout>
     </ScrollView>
 

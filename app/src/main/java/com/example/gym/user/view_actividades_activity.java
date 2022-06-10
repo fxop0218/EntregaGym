@@ -42,6 +42,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,6 +67,7 @@ public class view_actividades_activity extends AppCompatActivity {
     private AdapterActivity adapterActivity;
 
     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+    SimpleDateFormat sdfDay = new SimpleDateFormat("dd/MM/yyyy");
     private FirebaseFirestore db;
 
     private ListView lvActividades;
@@ -113,7 +115,6 @@ public class view_actividades_activity extends AppCompatActivity {
                     } else {
                         try  {
                             Reserva res = PojosClass.getReservaDao().getReserva(UserSession.getUsuario().getUser()+actividad.getIdActividad(), reserva -> {
-                                Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.ya_estas_incrito),Toast.LENGTH_SHORT).show();
                                 reserva.getIdReserva();
                             }, e -> {
                                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -193,19 +194,7 @@ public class view_actividades_activity extends AppCompatActivity {
 
     }
 
-    private List<Actividad> correctActivitys(List<Actividad> allActivitys) {
-        ArrayList<Actividad> correctActividades = new ArrayList<>();
-
-        for (int i = 0; i < allActivitys.size(); i++) {
-            if (allActivitys.get(i).getAforo() > allActivitys.get(i).getAforo_actual()) {
-                correctActividades.add(allActivitys.get(i));
-            }
-        }
-        return correctActividades;
-    }
-
     public void prueba(int gymID, String actDate){
-        String gymIDString = gymID + "";
         idActividad = new ArrayList<>();
         db.collection(ComFunctions.ACTIVIDADES).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -213,11 +202,19 @@ public class view_actividades_activity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         if (document.getDouble("gymID") == (gymID)) {
-                            for (Map.Entry<String, Object> entry : document.getData().entrySet()) {
-                                if (entry.getKey().equals("idActividad")) {
-                                    idActividad.add(String.valueOf(entry.getValue()));
-                                }
+                            Date selectedDay = null;
+                            try {
+                                selectedDay = sdfDay.parse(day);
+                            } catch (Exception e) {
                             }
+                                if (document.getDate("dia").equals(selectedDay)) {
+                                    for (Map.Entry<String, Object> entry : document.getData().entrySet()) {
+                                        if (entry.getKey().equals("idActividad")) {
+                                            idActividad.add(String.valueOf(entry.getValue()));
+                                        }
+                                    }
+                                }
+
                         }
                     }
                 } else {
@@ -238,9 +235,8 @@ public class view_actividades_activity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         for (int i = 0; i<idActividad.size(); i++) {
-
                             if (document.getId().equals(idActividad.get(i))){
-                                nombreActividad.add(document.getData().get("nombre").toString());
+                                nombreActividad.add(document.getString("nombre"));
                                 String hora_inicio = sdf.format(document.getDate("hora_inicio"));
                                 String hora_fin = sdf.format(document.getDate("hora_fin"));
                                 horaApertura.add(hora_inicio);
