@@ -88,6 +88,7 @@ public class viewUpcomingActivity extends AppCompatActivity {
 
                 String actID = correctID.get(i);
                 Actividad act = PojosClass.getActividadesDao().getActividad(Integer.parseInt(actID), actividad -> {
+                    builder = new AlertDialog.Builder(view.getContext());
                     builder.setMessage(R.string.eliminar_actividad).setCancelable(false).setPositiveButton("Si", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -95,20 +96,20 @@ public class viewUpcomingActivity extends AppCompatActivity {
                                 PojosClass.getReservaDao().deleteReserva(UserSession.getUsuario().getUser(), actividad.getIdActividad());
                                 actividad.resAforo_actual();
                                 PojosClass.getActividadesDao().setActiviad(actividad);
-                                Toast.makeText(getApplicationContext(), R.string.eliminar_reserva, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(view.getContext(), R.string.eliminar_reserva, Toast.LENGTH_SHORT).show();
                             } catch (Exception e) {
-                                Toast.makeText(getApplicationContext(), R.string.erro_eliminar_actividad, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(view.getContext(), R.string.erro_eliminar_actividad, Toast.LENGTH_SHORT).show();
                             }
                         }
                         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Toast.makeText(getApplicationContext(), R.string.accion_cancelada, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(view.getContext(), R.string.accion_cancelada, Toast.LENGTH_SHORT).show();
                             }
                         });
                         builder.show();
                 }, (e -> {
-                    Toast.makeText(getApplicationContext(), getText(R.string.erro_eliminar_actividad), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), getText(R.string.erro_eliminar_actividad), Toast.LENGTH_SHORT).show();
                 }));
             }
         });

@@ -58,7 +58,7 @@ public class ReservaDAOImp implements reservaDAO{
     @Override
     public void deleteReserva(String userName, int acivityID) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users").document(userName + acivityID).delete();
+        db.collection("reservas").document(userName + acivityID).delete();
     }
     @Override
     public void deleteReserva(String idReserva) {
