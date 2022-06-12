@@ -51,8 +51,6 @@ public class viewUpcomingActivity extends AppCompatActivity {
     SimpleDateFormat sdfDay = new SimpleDateFormat("dd/MM/yyyy");
     private Calendar calendar;
 
-    ArrayList<Reserva> registerArray = new ArrayList<>();
-    ArrayList<Actividad> activityArray = new ArrayList<>();
     private AlertDialog.Builder builder;
 
     @Override
