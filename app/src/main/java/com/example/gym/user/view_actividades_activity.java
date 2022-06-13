@@ -171,7 +171,7 @@ public class view_actividades_activity extends AppCompatActivity {
                                         actividad.sumAforo_actual();
                                         PojosClass.getActividadesDao().setActiviad(actividad);
                                     } else {
-                                        Toast.makeText(getApplicationContext(), "La actividad esta llena", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "The activity is full", Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (Exception e) {
                                     Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();

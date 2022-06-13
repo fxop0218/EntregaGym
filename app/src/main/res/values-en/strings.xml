@@ -100,5 +100,6 @@
     <string name="si">Yes</string>
     <string name="dia">Day</string>
     <string name="ver_acticidades_creadas">See created activity</string>
+    <string name="actividades">Activities</string>
 
 </resources>

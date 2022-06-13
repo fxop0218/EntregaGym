@@ -78,7 +78,7 @@
     <string name="ropa_hombre">ROPA HOMBRE</string>
     <string name="cerrar">Cerrar</string>
     <string name="actividades_proximas">Actividades proximas</string>
-    <string name="actividades" translatable="false">Actividades</string>
+    <string name="actividades">Actividades</string>
     <string name="atras">Atras</string>
     <string name="el_ptica">ELIPTICA</string>
     <string name="eliptica_exp">Perfecto para mejorar la coordinación y el sentido del equilibrio, es una de las máquinas más completas, ya que nos hace ejercitar el 80% de los músculos de nuestro cuerpo, y también muy intenso a nivel cardiovascular y respiratorio. En el tren superior se trabajan los pectorales y los hombros y en la parte baja los cuádriceps y nalgas. Y de manera secundaria la espalda, los brazos y los abdominales. Además, quema muchísimas calorías.</string>
@@ -125,5 +125,7 @@
     <string name="si">Si</string>
     <string name="dia">Dia</string>
     <string name="ver_acticidades_creadas">Ver acticidades creadas</string>
+    <string name="actual_password">Actual password</string>
+    <string name="new_password">New password</string>
 
 </resources>

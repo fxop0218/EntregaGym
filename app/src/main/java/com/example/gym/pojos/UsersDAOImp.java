@@ -69,8 +69,9 @@ public class UsersDAOImp implements UsersDAO{
   }
 
   @Override
-  public void setUsuario(Usuario u) {
-
+  public void setUsuario(Usuario u1) {
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    db.collection("users").document(u1.getUser()).set(u1);
   }
 
   /**

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="fill_parent"
+    android:gravity="center_horizontal" android:background="#ffffff"
+    android:orientation="vertical" android:padding="10dp">
+    <EditText android:id="@+id/etActualPwd" android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:maxLength="30"
+        android:hint="@string/actual_password"/>
+    <EditText android:id="@+id/etNewPwd" android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:maxLength="30"
+        android:hint="@string/new_password"/>
+</LinearLayout>
