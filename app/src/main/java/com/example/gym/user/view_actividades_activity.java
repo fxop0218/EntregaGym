@@ -128,6 +128,7 @@ public class view_actividades_activity extends AppCompatActivity {
                             }
                         } catch (Exception e) {
                             PojosClass.getReservaDao().addReserva(new Reserva(UserSession.getUsuario().getUser(), actividad.getIdActividad() ,UserSession.getUsuario().getUser() + "" + actividad.getIdActividad()));
+                            Toast.makeText(view.getContext(), "Successfully enrolled in the example activity1" + actividad.getNombre(), Toast.LENGTH_SHORT).show();
                             actividad.sumAforo_actual();
                             PojosClass.getActividadesDao().setActiviad(actividad);
                         }

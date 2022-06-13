@@ -172,6 +172,7 @@
                     android:hint="@string/hora_de_cierre"
                     android:inputType="textPersonName"
                     android:textColorHint="@android:color/darker_gray"
+                    android:textColor="@android:color/darker_gray"
                     />
 
             </LinearLayout>
