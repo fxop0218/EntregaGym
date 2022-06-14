@@ -10,7 +10,7 @@ public class Usuario{
     private int dataNacimiento;
     private String user;
     private String password;
-    private int idGimnasios;
+    private String idGimnasios;
     private boolean gymOwner = false;
 
     //Contructor usuarios noramles
@@ -26,7 +26,7 @@ public class Usuario{
     }
 
     //Constructor dueños de un gimnasio
-    public Usuario (String nombre, String apellidos, String dni, int dataNacimiento, String user, String password,int gymId, boolean gymOwner) {
+    public Usuario (String nombre, String apellidos, String dni, int dataNacimiento, String user, String password,String gymId, boolean gymOwner) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.dni = dni;
@@ -86,11 +86,11 @@ public class Usuario{
         this.password = password;
     }
 
-    public int getIdGimnasios() {
+    public String getIdGimnasios() {
         return idGimnasios;
     }
 
-    public void setIdGimnasios(int idGimnasios) {
+    public void setIdGimnasios(String idGimnasios) {
         this.idGimnasios = idGimnasios;
     }
 

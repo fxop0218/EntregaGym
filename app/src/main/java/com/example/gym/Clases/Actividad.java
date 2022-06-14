@@ -6,7 +6,7 @@ import java.util.Date;
 public class Actividad {
 
     private int idActividad;
-    private int gymID;
+    private String gymID;
     private String nombre;
     private int aforo;
     private int aforo_actual = 0;
@@ -16,7 +16,7 @@ public class Actividad {
 
     public Actividad() {}
 
-    public Actividad(int idActividad, String nombre, int gymID, int aforo, Date hora_inicio, Date hora_fin, Date dia) {
+    public Actividad(int idActividad, String nombre, String gymID, int aforo, Date hora_inicio, Date hora_fin, Date dia) {
         this.idActividad = idActividad;
         this.nombre = nombre;
         this.gymID = gymID;
@@ -43,11 +43,11 @@ public class Actividad {
         this.nombre = nombre;
     }
 
-    public int getGymID() {
+    public String getGymID() {
         return gymID ;
     }
 
-    public void setGymID(int gymID) {
+    public void setGymID(String gymID) {
         this.gymID = gymID;
     }
 

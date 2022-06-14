@@ -27,7 +27,7 @@ public class  GymDAOimp implements GymDAO{
     }
 
     @Override
-    public Gym getGym(int idGym, OnSuccessListener<Gym> listener, OnFailureListener failureListener) {
+    public Gym getGym(String idGym, OnSuccessListener<Gym> listener, OnFailureListener failureListener) {
         final Gym[] gym = new Gym[1];
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection(ComFunctions.GYM).document(idGym+"");

@@ -54,7 +54,7 @@ public class ActividadesDAOImp implements ActividadesDAO{
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull @NotNull Exception e) {
-                failure.onFailure(new Exception("Error al encontrar la actividad"));
+                failure.onFailure(new Exception("Error to find activity"));
             }
         });
         if (act[0] != null) return act[0];
@@ -80,7 +80,7 @@ public class ActividadesDAOImp implements ActividadesDAO{
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                failureListener.onFailure(new Exception("No se ha encontrado ninguna actividad"));
+                failureListener.onFailure(new Exception("Activity don't found"));
             }
         });
 

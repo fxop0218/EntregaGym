@@ -93,14 +93,14 @@ public class view_created_activity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.aforo_maximo) , Toast.LENGTH_SHORT).show();
                     } else {
                         AlertDialog.Builder dialog = new AlertDialog.Builder(view.getContext());
-                        dialog.setMessage("Eliminar actividad");
+                        dialog.setMessage("Delete activity");
                         dialog.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i3) {
                                 PojosClass.getActividadesDao().deleteActividad(Integer.parseInt(actID));
                                 getReservas(Integer.parseInt(actID));
                             }
-                        }).setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
+                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i2) {
                                 finish();
@@ -149,7 +149,7 @@ public class view_created_activity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        if (document.getDouble("gymID") == (UserSession.getUsuario().getIdGimnasios())) {
+                        if (document.getString("gymID").equals(UserSession.getUsuario().getIdGimnasios())) {
                             for (Map.Entry<String, Object> entry : document.getData().entrySet()) {
                                 if (entry.getKey().equals("idActividad")) {
                                     idActividad.add(String.valueOf(entry.getValue()));

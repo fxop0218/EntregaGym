@@ -68,8 +68,8 @@ public class RegisterGymActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (ComFunctions.is_not_correct(etGymID,8)) {
-                    etGymID.setError("El id del gimnasio tiene que tener 8 numeros");
+                if (ComFunctions.is_not_correct(etGymID,8, 15)) {
+                    etGymID.setError("The gym id must be between 8 and 15 characters long");
                     bNextStep.setEnabled(setRegisterEnabled());
                 }
             }
@@ -159,12 +159,12 @@ public class RegisterGymActivity extends AppCompatActivity {
         //TODO Guardar aqui en la base de datos los archivos
         correct.set(false);
         try {
-            Gym gym = PojosClass.getGymDAO().getGym(Integer.parseInt(etGymID.getText().toString()), (g -> {
+            Gym gym = PojosClass.getGymDAO().getGym(etGymID.getText().toString(), (g -> {
                 if (g != null) {
-                    Toast.makeText(getApplicationContext(), "Ya existe un gimnasio con la ID" + g.getIdGym(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "There is already a gym with the ID" + g.getIdGym(), Toast.LENGTH_SHORT).show();
                 } else {
                     try {
-                        Gym g1 = new Gym(Integer.parseInt(etGymID.getText().toString()), etCity.getText().toString(), Integer.parseInt(etPostalCode.getText().toString()), df.parse(etHoraA.getText().toString()), df.parse(etHoraC.getText().toString()));
+                        Gym g1 = new Gym(etGymID.getText().toString(), etCity.getText().toString(), Integer.parseInt(etPostalCode.getText().toString()), df.parse(etHoraA.getText().toString()), df.parse(etHoraC.getText().toString()));
                         PojosClass.getGymDAO().setNewGym(g1);
                         Intent i = new Intent(this, RegisterActivity.class);
                         i.putExtra("owner", true);
@@ -176,7 +176,7 @@ public class RegisterGymActivity extends AppCompatActivity {
                 }
             }),(e -> {
                 try {
-                    Gym g1 = new Gym(Integer.parseInt(etGymID.getText().toString()), etCity.getText().toString(), Integer.parseInt(etPostalCode.getText().toString()), df.parse(etHoraA.getText().toString()), df.parse(etHoraC.getText().toString()));
+                    Gym g1 = new Gym(etGymID.getText().toString(), etCity.getText().toString(), Integer.parseInt(etPostalCode.getText().toString()), df.parse(etHoraA.getText().toString()), df.parse(etHoraC.getText().toString()));
                     PojosClass.getGymDAO().setNewGym(g1);
                     Intent i = new Intent(this, RegisterActivity.class);
                     i.putExtra("owner", true);
@@ -187,7 +187,7 @@ public class RegisterGymActivity extends AppCompatActivity {
                 }
             }));
         } catch (Exception e) {
-            Toast.makeText(this, "Error al introducir el gimnasio a la base de datos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error entering gym to database", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -206,7 +206,7 @@ public class RegisterGymActivity extends AppCompatActivity {
             }
         };
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, AlertDialog.THEME_HOLO_DARK, onTimeSetListener, horaA, minuteA, true);
-        timePickerDialog.setTitle("Seleciona la hora de apertura del gimnasio");
+        timePickerDialog.setTitle("Select the opening time of the gym");
         timePickerDialog.show();
     }
 
@@ -224,7 +224,7 @@ public class RegisterGymActivity extends AppCompatActivity {
             }
         };
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, AlertDialog.THEME_HOLO_DARK, onTimeSetListener, horaC, minuteC, true);
-        timePickerDialog.setTitle("Seleciona la hora de cierre del gimnasio");
+        timePickerDialog.setTitle("Select the closing time of the gym");
         timePickerDialog.show();
     }
 
@@ -234,7 +234,7 @@ public class RegisterGymActivity extends AppCompatActivity {
      */
     public boolean setRegisterEnabled() {
         boolean correctLogin = true;
-        if (ComFunctions.is_not_correct(etGymID, 8)) {
+        if (ComFunctions.is_not_correct(etGymID, 8, 15)) {
             correctLogin = false;
         };
         if (ComFunctions.is_not_correct(etCity, 5, 20)) {

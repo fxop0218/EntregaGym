@@ -163,7 +163,7 @@ public class view_actividades_activity extends AppCompatActivity {
                             PojosClass.getActividadesDao().getActividad(Integer.parseInt(activityID.getText().toString()), (actividad ->{
                                 try {
                                     if (actividad.getAforo_actual() == actividad.getAforo()) {
-                                        PojosClass.getUsuarioDAO().addGym(Integer.parseInt(activityID.getText().toString()));
+                                        PojosClass.getUsuarioDAO().addGym(activityID.getText().toString());
                                         Reserva r1 = new Reserva(UserSession.getUsuario().getUser(), actividad.getIdActividad(), UserSession.getUsuario().getUser()+ actividad.getIdActividad());
                                         PojosClass.getReservaDao().addReserva(r1); // Se añade la nueva id de gimnasion en la session de usuario actual
                                         Toast.makeText(view.getContext(), getString(R.string.insctito_exito) + actividad.getIdActividad(), Toast.LENGTH_SHORT).show();
@@ -195,14 +195,14 @@ public class view_actividades_activity extends AppCompatActivity {
 
     }
 
-    public void prueba(int gymID, String actDate){
+    public void prueba(String gymID, String actDate){
         idActividad = new ArrayList<>();
         db.collection(ComFunctions.ACTIVIDADES).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        if (document.getDouble("gymID") == (gymID)) {
+                        if (document.get("gymID").equals(gymID)) {
                             Date selectedDay = null;
                             try {
                                 selectedDay = sdfDay.parse(day);

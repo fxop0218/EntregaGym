@@ -86,7 +86,7 @@
     <string name="error_seleccion_dia">Day selection error</string>
     <string name="selecciona_dia_anterior">Select a day ago</string>
     <string name="ejecutado_con_exito">Executed</string>
-    <string name="adjunta_id_gym">Introduce a Gym ID (8 numbers)</string>
+    <string name="adjunta_id_gym">Attach the name of your gym</string>
     <string name="aceptar">Acept</string>
     <string name="insctito_exito">You have assigned to: </string>
     <string name="id_correcta">Select a correct ID </string>

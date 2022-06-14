@@ -4,13 +4,13 @@ import java.util.Date;
 
 public class Gym {
 
-    private int idGym;
+    private String idGym;
     private String ciudad;
     private int CP;
     private Date hora_apertura;
     private Date hora_cerrada;
 
-    public Gym(int idGym, String ciudad, int CP, Date hora_apertura, Date hora_cerrada) {
+    public Gym(String idGym, String ciudad, int CP, Date hora_apertura, Date hora_cerrada) {
         this.idGym = idGym;
         this.ciudad = ciudad;
         this.CP = CP;
@@ -20,11 +20,11 @@ public class Gym {
 
     public Gym() { }
 
-    public int getIdGym() {
+    public String getIdGym() {
         return idGym;
     }
 
-    public void setIdGym(int idGym) {
+    public void setIdGym(String idGym) {
         this.idGym = idGym;
     }
 

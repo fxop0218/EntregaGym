@@ -34,7 +34,7 @@ public class RegisterActivity extends Activity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private boolean isOwner = false;
-    private int idGym = 0;
+    private String idGym;
     private String DNIerror = "El dni tiene que contener 9 caracteres", NameError = "El nombre tiene que tener entre 3 y 20 letras", SurnameError = "El apellido tiene que tener entre 5 y 20 letras", UserNameError = "El correo debe tener entre 8 y 30 letras y debe contener @", PwdError = "La contraseña tiene que tener entre 5 y 20 letras";
 
     /**
@@ -58,7 +58,7 @@ public class RegisterActivity extends Activity {
         bRegister = findViewById(R.id.bRegsiter);
         bCreateGymAccount = findViewById(R.id.bCreateGymAccount);
         isOwner = i.getBooleanExtra("owner", false);
-        idGym = i.getIntExtra("gymID", 0);
+        idGym = i.getStringExtra("gymID");
 
         if (isOwner) bCreateGymAccount.setVisibility(View.INVISIBLE);
 

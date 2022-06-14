@@ -111,7 +111,7 @@
     <string name="error_seleccion_dia">Error al selecionar un dia</string>
     <string name="selecciona_dia_anterior">Seleciona un dia posterior al de hoy</string>
     <string name="ejecutado_con_exito">Ejecutado con exito</string>
-    <string name="adjunta_id_gym">Adjunta el ID de tu gimnasio (8 numeros)</string>
+    <string name="adjunta_id_gym">Adjunta el nombre de tu gimnasio</string>
     <string name="aceptar">Aceptar</string>
     <string name="insctito_exito">\"Te has insctito con exito a \"</string>
     <string name="id_correcta">\"Introduce una id correcta \"</string>

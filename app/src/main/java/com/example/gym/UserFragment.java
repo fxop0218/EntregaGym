@@ -116,45 +116,49 @@ public class UserFragment extends Fragment {
         bSetGym.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(v.getContext());
-                alertBuilder.setTitle(R.string.adjunta_id_gym);
-                final EditText etGymID = new EditText(v.getContext());
-                etGymID.setInputType(InputType.TYPE_CLASS_NUMBER);
-                etGymID.setFilters(new InputFilter[] {new InputFilter.LengthFilter(8) }); // Se añade un maximo de numeros al edit text
-                alertBuilder.setView(etGymID);
-                alertBuilder.setCancelable(true);
-                alertBuilder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (!etGymID.getText().toString().isEmpty() && etGymID.getText().toString().length() == 8) {
-                            try {
-                                PojosClass.getGymDAO().getGym(Integer.parseInt(etGymID.getText().toString()), (gym ->{
-                                    try {
-                                        PojosClass.getUsuarioDAO().addGym(Integer.parseInt(etGymID.getText().toString()));
-                                        Toast.makeText(v.getContext(), getString(R.string.insctito_exito) + gym.getIdGym(), Toast.LENGTH_SHORT).show();
-                                        UserSession.getUsuario().setIdGimnasios(Integer.parseInt(etGymID.getText().toString())); // Se añade la nueva id de gimnasion en la session de usuario actual
+                if (!UserSession.getUsuario().isGymOwner()) {
+                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(v.getContext());
+                    alertBuilder.setTitle(R.string.adjunta_id_gym);
+                    final EditText etGymID = new EditText(v.getContext());
+                    etGymID.setInputType(InputType.TYPE_CLASS_TEXT);
+                    etGymID.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)}); // Se añade un maximo de numeros al edit text
+                    alertBuilder.setView(etGymID);
+                    alertBuilder.setCancelable(true);
+                    alertBuilder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if (!etGymID.getText().toString().isEmpty() && etGymID.getText().toString().length() > 8 && etGymID.getText().toString().length() < 15) {
+                                try {
+                                    PojosClass.getGymDAO().getGym(etGymID.getText().toString(), (gym -> {
+                                        try {
+                                            PojosClass.getUsuarioDAO().addGym(etGymID.getText().toString());
+                                            Toast.makeText(v.getContext(), getString(R.string.insctito_exito) + gym.getIdGym(), Toast.LENGTH_SHORT).show();
+                                            UserSession.getUsuario().setIdGimnasios(etGymID.getText().toString()); // Se añade la nueva id de gimnasion en la session de usuario actual
 
-                                    } catch (Exception e) {
-                                        Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                }), (failure -> {
-                                    Toast.makeText(v.getContext(), failure.getMessage(), Toast.LENGTH_SHORT).show();
-                                }));
-                            } catch (Exception e) {
-                                Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        } catch (Exception e) {
+                                            Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }), (failure -> {
+                                        Toast.makeText(v.getContext(), failure.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }));
+                                } catch (Exception e) {
+                                    Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(getContext(), R.string.id_correcta, Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            Toast.makeText(getContext(), R.string.id_correcta, Toast.LENGTH_SHORT).show();
                         }
-                    }
-                })
-                .setNegativeButton(R.string.cerrar, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(v.getContext(), R.string.cancelado_operacion, Toast.LENGTH_SHORT).show();
-                    }
-                });
-                alertBuilder.show();
+                    })
+                            .setNegativeButton(R.string.cerrar, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Toast.makeText(v.getContext(), R.string.cancelado_operacion, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                    alertBuilder.show();
+                } else {
+                    Toast.makeText(v.getContext(), "Gym owners can't change", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

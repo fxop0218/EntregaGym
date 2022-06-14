@@ -79,7 +79,7 @@ public class UsersDAOImp implements UsersDAO{
    * @param gymID
    */
   @Override
-  public void addGym(int gymID) throws Exception {
+  public void addGym(String gymID) throws Exception {
     FirebaseFirestore db = FireConnection.getDb();
     Usuario uChanged = UserSession.getUsuario();
     if (!uChanged.isGymOwner()) {

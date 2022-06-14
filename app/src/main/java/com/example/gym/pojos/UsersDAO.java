@@ -9,5 +9,5 @@ public interface UsersDAO {
     public String getUserPwd(String userName);
     public void setUsuario(Usuario u);
     public void deleteUser (String username) throws Exception;
-    public void addGym(int gymID) throws Exception;
+    public void addGym(String gymID) throws Exception;
 }
