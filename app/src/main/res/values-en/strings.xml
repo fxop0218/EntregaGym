@@ -101,5 +101,8 @@
     <string name="dia">Day</string>
     <string name="ver_acticidades_creadas">See created activity</string>
     <string name="actividades">Activities</string>
+    <string name="exit">Salir</string>
+    <string name="actual_password">Contraseña actual</string>
+    <string name="new_password">Nueva contraseña</string>
 
 </resources>

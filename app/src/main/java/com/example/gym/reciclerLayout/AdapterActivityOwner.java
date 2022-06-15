@@ -58,8 +58,8 @@ public class AdapterActivityOwner extends ArrayAdapter {
 
 
         tvNombre.setText(context.getString(R.string.nombre) + ": " + nombreAct.get(position));
-        tvHoraInicio.setText(context.getString(R.string.horaA) + ": " +hora_inicio.get(position));
-        tvHoraFin.setText(context.getString(R.string.horaC) + ": " + hora_fin.get(position));
+        tvHoraInicio.setText(hora_inicio.get(position));
+        tvHoraFin.setText("to \t" + hora_fin.get(position));
         tvDia.setText(context.getString(R.string.dia) + ": " + dia.get(position));
 
         return row;

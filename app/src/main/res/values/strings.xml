@@ -127,5 +127,6 @@
     <string name="ver_acticidades_creadas">Ver acticidades creadas</string>
     <string name="actual_password">Actual password</string>
     <string name="new_password">New password</string>
+    <string name="exit">Exit</string>
 
 </resources>

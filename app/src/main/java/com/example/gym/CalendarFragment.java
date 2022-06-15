@@ -158,7 +158,6 @@ public class CalendarFragment extends Fragment {
             public void onClick(View view) {
                 if (selDate != null && !date.isEmpty()) {
                     if (!actualDate.before(selDate)) {
-                        Toast.makeText(view.getContext(), R.string.Actividades, Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getContext(), view_actividades_activity.class);
                         i.putExtra("day", date); //Pasa la fecha escogida por el usuario
                         startActivity(i);

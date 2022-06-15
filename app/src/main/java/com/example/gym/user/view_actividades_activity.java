@@ -119,21 +119,21 @@ public class view_actividades_activity extends AppCompatActivity {
                                 try  {
                                     Reserva res = PojosClass.getReservaDao().getReserva(UserSession.getUsuario().getUser()+""+actividad.getIdActividad(), reserva -> {
                                         result = reserva;
+                                        if (reserva == null) {
+                                            if (actividad.getAforo_actual() != actividad.getAforo()) {
+                                                PojosClass.getReservaDao().addReserva(new Reserva(UserSession.getUsuario().getUser(), actividad.getIdActividad(), UserSession.getUsuario().getUser() + "" + actividad.getIdActividad()));
+                                                actividad.sumAforo_actual();
+                                                PojosClass.getActividadesDao().setActiviad(actividad);
+                                                Toast.makeText(view.getContext(), "Successfully registered for the activity " + actividad.getNombre(), Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(view.getContext(), "Maximum capacity allowed", Toast.LENGTH_SHORT).show();
+                                            }
+                                        } else {
+                                            Toast.makeText(view.getContext(), R.string.ya_estas_incrito, Toast.LENGTH_SHORT).show();
+                                        }
                                     }, e -> {
                                         Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                                     });
-                                    if (res != null || result != null)  {
-                                        Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.ya_estas_incrito), Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        if (actividad.getAforo_actual() != actividad.getAforo()) {
-                                            PojosClass.getReservaDao().addReserva(new Reserva(UserSession.getUsuario().getUser(), actividad.getIdActividad(), UserSession.getUsuario().getUser() + "" + actividad.getIdActividad()));
-                                            actividad.sumAforo_actual();
-                                            PojosClass.getActividadesDao().setActiviad(actividad);
-                                            Toast.makeText(view.getContext(), "Successfully registered for the activity " + actividad.getNombre(), Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Toast.makeText(view.getContext(), "Maximum capacity allowed", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
                                 } catch (Exception e) {
                                     if (result != null)  {
                                         Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.ya_estas_incrito), Toast.LENGTH_SHORT).show();
@@ -152,6 +152,9 @@ public class view_actividades_activity extends AppCompatActivity {
                         }, e -> {
                             Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.reintentar), Toast.LENGTH_SHORT).show();
                         });
+                        if (result != null)  {
+                            Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.ya_estas_incrito), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
