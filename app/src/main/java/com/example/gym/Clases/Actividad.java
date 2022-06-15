@@ -63,12 +63,12 @@ public class Actividad {
         return aforo_actual;
     }
 
-    public void setAforo_actual(int aforo) {
+    public void setAforo_actual(int aforo_actual) {
         this.aforo_actual = aforo_actual;
     }
 
     public void sumAforo_actual() {
-        if (aforo_actual < aforo) aforo_actual++;
+        if (aforo_actual != aforo) aforo_actual++;
     }
 
     public void resAforo_actual() {

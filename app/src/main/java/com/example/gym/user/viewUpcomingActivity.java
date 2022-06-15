@@ -87,7 +87,7 @@ public class viewUpcomingActivity extends AppCompatActivity {
                 String actID = correctID.get(i);
                 Actividad act = PojosClass.getActividadesDao().getActividad(Integer.parseInt(actID), actividad -> {
                     builder = new AlertDialog.Builder(view.getContext());
-                    builder.setMessage(R.string.eliminar_actividad).setCancelable(false).setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    builder.setMessage(R.string.eliminar_actividad).setCancelable(false).setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             try {

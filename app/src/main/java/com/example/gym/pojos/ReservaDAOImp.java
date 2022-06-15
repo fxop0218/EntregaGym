@@ -41,8 +41,9 @@ public class ReservaDAOImp implements reservaDAO{
             public void onFailure(@NonNull @NotNull Exception e) {
                 failureListener.onFailure(new Exception("Error"));
             }
-        });;
-        return res[0];
+        });
+        if (res[0] != null) return res[0];
+        return null;
     }
 
     @Override

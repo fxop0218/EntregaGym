@@ -103,39 +103,63 @@ public class view_actividades_activity extends AppCompatActivity {
         }
         */
         lvActividades.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+            Reserva result = null;
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //TODO comprobar si el esta completo la actividad
-                //TODO apuntarse a la actividad
                 String actID = idActividad.get(i);
-                Actividad act = PojosClass.getActividadesDao().getActividad(Integer.parseInt(actID), actividad -> {
-                    if (actividad.getAforo()==actividad.getAforo_actual()) {
-                        Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.aforo_maximo) , Toast.LENGTH_SHORT).show();
-                    } else {
-                        try  {
-                            Reserva res = PojosClass.getReservaDao().getReserva(UserSession.getUsuario().getUser()+actividad.getIdActividad(), reserva -> {
-                                reserva.getIdReserva();
-                            }, e -> {
-                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                            });
-                            if (res != null) {
-                                Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.ya_estas_incrito), Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Surely you want to register for the activity");
+                builder.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Actividad act = PojosClass.getActividadesDao().getActividad(Integer.parseInt(actID), actividad -> {
+                            if (actividad.getAforo()==actividad.getAforo_actual()) {
+                                Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.aforo_maximo) , Toast.LENGTH_SHORT).show();
                             } else {
-                                PojosClass.getReservaDao().addReserva(new Reserva(UserSession.getUsuario().getUser(), actividad.getIdActividad() ,UserSession.getUsuario().getUser() + "" + actividad.getIdActividad()));
-                                actividad.sumAforo_actual();
-                                PojosClass.getActividadesDao().setActiviad(actividad);
+                                try  {
+                                    Reserva res = PojosClass.getReservaDao().getReserva(UserSession.getUsuario().getUser()+""+actividad.getIdActividad(), reserva -> {
+                                        result = reserva;
+                                    }, e -> {
+                                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    });
+                                    if (res != null || result != null)  {
+                                        Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.ya_estas_incrito), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        if (actividad.getAforo_actual() != actividad.getAforo()) {
+                                            PojosClass.getReservaDao().addReserva(new Reserva(UserSession.getUsuario().getUser(), actividad.getIdActividad(), UserSession.getUsuario().getUser() + "" + actividad.getIdActividad()));
+                                            actividad.sumAforo_actual();
+                                            PojosClass.getActividadesDao().setActiviad(actividad);
+                                            Toast.makeText(view.getContext(), "Successfully registered for the activity " + actividad.getNombre(), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(view.getContext(), "Maximum capacity allowed", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    if (result != null)  {
+                                        Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.ya_estas_incrito), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        if (actividad.getAforo_actual() != actividad.getAforo()) {
+                                            PojosClass.getReservaDao().addReserva(new Reserva(UserSession.getUsuario().getUser(), actividad.getIdActividad(), UserSession.getUsuario().getUser() + "" + actividad.getIdActividad()));
+                                            actividad.sumAforo_actual();
+                                            PojosClass.getActividadesDao().setActiviad(actividad);
+                                            Toast.makeText(view.getContext(), "Successfully registered for the activity " + actividad.getNombre(), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(view.getContext(), "Maximum capacity allowed", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
                             }
-                        } catch (Exception e) {
-                            PojosClass.getReservaDao().addReserva(new Reserva(UserSession.getUsuario().getUser(), actividad.getIdActividad() ,UserSession.getUsuario().getUser() + "" + actividad.getIdActividad()));
-                            Toast.makeText(view.getContext(), "Successfully enrolled in the example activity1" + actividad.getNombre(), Toast.LENGTH_SHORT).show();
-                            actividad.sumAforo_actual();
-                            PojosClass.getActividadesDao().setActiviad(actividad);
-                        }
+                        }, e -> {
+                            Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.reintentar), Toast.LENGTH_SHORT).show();
+                        });
                     }
-                }, e -> {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.reintentar), Toast.LENGTH_SHORT).show();
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(view.getContext(), R.string.cancelado_operacion, Toast.LENGTH_SHORT).show();
+                    }
                 });
+                builder.show();
             }
         });
 
